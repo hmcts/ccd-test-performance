@@ -6,7 +6,7 @@ import uk.gov.hmcts.ccd.util.CcdTokenGenerator
 
 object SearchCasesAPIGateway {
 
-  def SearchCasesAPIGatewayhttp[() = {
+  def SearchCasesAPIGatewayhttp() = {
 
     http("get case data")
       .get("/aggregated/caseworkers/538/jurisdictions/TEST/case-types/Benefit/cases")
