@@ -11,7 +11,7 @@ class GetUserProfileSimulation extends CCDSimulation {
 
   val scenarios = List(
       GetUserProfile.scenarios.inject(
-        atOnceUsers(1)
+        constantUsersPerSec(RequestRateSec.getOrElse(1)) during(1 minutes)
       )
   )
 
