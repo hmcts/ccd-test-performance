@@ -6,11 +6,13 @@ import uk.gov.hmcts.ccd.util.CcdTokenGenerator
 
 object SearchCasesAPIGateway {
 
-  def SearchCasesAPIGatewayhttp() = {
+  val url = "/aggregated/caseworkers/538/jurisdictions/TEST/case-types/Benefit/cases"
+  val userToken = CcdTokenGenerator.generateWebUserToken(url)
 
+  def SearchCasesAPIGatewayhttp() = {
     http("get case data")
-      .get("/aggregated/caseworkers/538/jurisdictions/TEST/case-types/Benefit/cases")
-      .header("Authorization", CcdTokenGenerator.generateWebUserToken)
+      .get(url)
+      .header("Authorization", userToken)
       .header("Content-Type","application/json")
       .check(status in  (200))
   }

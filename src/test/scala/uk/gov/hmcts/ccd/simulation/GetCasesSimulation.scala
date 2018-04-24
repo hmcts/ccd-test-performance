@@ -9,6 +9,7 @@ class GetCasesSimulation extends CCDSimulation {
 
   val baseHttpUrl: String = config.getString("caseDataUrl")
   private val requestRate: Double = RequestRateSec.getOrElse(1)
+
   println(s"request per second:$requestRate")
 
   val scenarios = List(
