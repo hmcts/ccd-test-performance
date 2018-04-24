@@ -8,11 +8,12 @@ object GetUserProfile extends PerformanceTestsConfig {
 
   def getAllUsersHttp() = {
     val token = CcdTokenGenerator.generateDataStoreS2SToken()
+    val url = s"$UserProfileUrl/user-profile/users?uid=ccdwebdomain@gmail.com"
 
     http("get a user profile")
-      .get(s"$UserProfileUrl/user-profile/users?uid=ccdwebdomain@gmail.com")
+      .get(url)
       .header("ServiceAuthorization", token)
-      .header("Authorization", CcdTokenGenerator.generateWebUserToken)
+      .header("Authorization", CcdTokenGenerator.generateWebUserToken(url))
       .check(status is 200)
   }
 

@@ -27,7 +27,7 @@ object PostEvent extends PerformanceTestsConfig {
 
   def saveEventDataHttp() = {
     val token = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken
+    val userToken = CcdTokenGenerator.generateWebUserToken(SaveEventUrl)
     exec(
          http("save event token")
            .get(SaveEventTokenUrl)

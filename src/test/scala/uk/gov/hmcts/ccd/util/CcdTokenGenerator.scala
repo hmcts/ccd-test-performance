@@ -11,7 +11,7 @@ object CcdTokenGenerator extends PerformanceTestsConfig with SpringApplicationCo
   var dataStoreS2STokenGenerator = applicationContext.getBean("dataStoreS2STokenGenerator").asInstanceOf[AuthTokenGenerator]
   var gatewayS2STokenGenerator = applicationContext.getBean("gatewayS2STokenGenerator").asInstanceOf[AuthTokenGenerator]
 
-  def generateWebUserToken: String = generateUserToken(UserCcdId, s"caseworker-${config.getString("jurisdiction")}")
+  def generateWebUserToken(url: String): String = generateUserToken(UserCcdId, getRole(url))
 
   def generateImportUserToken: String = generateUserToken(UserImportId, "ccd-import")
 
@@ -34,6 +34,18 @@ object CcdTokenGenerator extends PerformanceTestsConfig with SpringApplicationCo
     val token = gatewayS2STokenGenerator.generate()
     println(s"generated s2s gateway token: $token")
     token
+  }
+
+  private def getRole(url: String) = {
+    val jurisdictionOpt = if (!url.contains("jurisdictions")) {
+      None
+    } else {
+      val jurisdiction = url.split("jurisdictions/")(1).split("/")(0)
+      Some(jurisdiction.toLowerCase)
+    }
+    val result = "caseworker" + jurisdictionOpt.map(j => s"-$j").getOrElse("")
+    println(s"role used for user token generation: $result")
+    result
   }
 
 }
