@@ -3,6 +3,7 @@ package uk.gov.hmcts.ccd.corecasedata.scenarios
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import uk.gov.hmcts.ccd.util.{CcdTokenGenerator, PerformanceTestsConfig}
+import scala.concurrent.duration._
 
 object SearchCases extends PerformanceTestsConfig {
 
@@ -12,7 +13,8 @@ object SearchCases extends PerformanceTestsConfig {
   def httpRequest() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
     val userToken = CcdTokenGenerator.generateWebUserToken(url)
-    http("search cases")
+    //http("search cases")
+    http("TX03_CCD_SearchCaseEndpoint_searchcases")
       .get(url)
       .header("ServiceAuthorization", s2sToken)
       .header("Authorization", userToken)
@@ -20,6 +22,14 @@ object SearchCases extends PerformanceTestsConfig {
       .check(status in  (200))
   }
 
-  val searchCases = scenario("search cases")
-    .exec(httpRequest())
+  println("SearchCases: Minimum think time " + minThinkTime + " Maximum think time " + maxThinkTime)
+
+  val searchCases = scenario("search cases").during(totalRunDuration minutes) {
+      exec(
+          httpRequest()
+      )
+      .pause(minThinkTime seconds, maxThinkTime seconds)
+  }
+
+  val waitForNextIteration = pace(MinWaitForNextIteration seconds, MaxWaitForNextIteration seconds)
 }

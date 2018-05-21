@@ -3,10 +3,12 @@ package uk.gov.hmcts.ccd.corecasedata.scenarios
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import uk.gov.hmcts.ccd.util.{CcdTokenGenerator, PerformanceTestsConfig}
+import scala.concurrent.duration._
 
 object PostEvent extends PerformanceTestsConfig {
 
-  val EventId = "updateContactDetails"
+ // val EventId = "updateContactDetails"
+  val EventId = "UPDATE"
   val SaveEventUrl = caseDataUrl(config.getString("saveEventUrl"))
   val SaveEventTokenUrl = s"${SaveEventUrl.replaceAll("events", "")}event-triggers/$EventId/token"
   println("save event url: " + SaveEventUrl)
@@ -29,14 +31,16 @@ object PostEvent extends PerformanceTestsConfig {
     val token = CcdTokenGenerator.generateGatewayS2SToken()
     val userToken = CcdTokenGenerator.generateWebUserToken(SaveEventUrl)
     exec(
-         http("save event token")
+         //http("save event token")
+           http("TX04_CCD_SaveEventEndpoint_saveeventtoken")
            .get(SaveEventTokenUrl)
            .header("ServiceAuthorization", token)
            .header("Authorization", userToken)
            .header("Content-Type","application/json")
            .check(status.is(200),jsonPath("$.token").saveAs("eventToken"))
       ).exec(
-        http("save event")
+       // http("save event")
+         http("TX04_CCD_SaveEventEndpoint")
         .post(SaveEventUrl)
         .body(
           EventBody).asJSON
@@ -47,9 +51,15 @@ object PostEvent extends PerformanceTestsConfig {
     )
   }
 
+  println("PostEvent: Minimum think time " + minThinkTime + " Maximum think time " + maxThinkTime)
 
-  val saveEventData = scenario("Save event")
-    .exec(saveEventDataHttp())
+  val saveEventData = scenario("Save event").during(totalRunDuration minutes) {
+      exec(
+          saveEventDataHttp()
+      )
+      .pause(minThinkTime seconds, maxThinkTime seconds)
+  }
 
+  val waitForNextIteration = pace(MinWaitForNextIteration seconds, MaxWaitForNextIteration seconds)
 }
 

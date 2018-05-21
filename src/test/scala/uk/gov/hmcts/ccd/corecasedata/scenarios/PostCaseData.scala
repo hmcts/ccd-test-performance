@@ -3,10 +3,12 @@ package uk.gov.hmcts.ccd.corecasedata.scenarios
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import uk.gov.hmcts.ccd.util.{CcdTokenGenerator, PerformanceTestsConfig}
+import scala.concurrent.duration._
 
 object PostCaseData extends PerformanceTestsConfig {
 
-  val EventId = "applyForGrant"
+ // val EventId = "applyForGrant"
+  val EventId = "CREATE"
   val CreateCaseUrl = caseDataUrl(config.getString("createCaseUrl"))
   val CreateCaseTokenUrl = s"${CreateCaseUrl.replaceAll("cases", "")}event-triggers/$EventId/token"
   println("create case url: " + CreateCaseUrl)
@@ -101,14 +103,16 @@ object PostCaseData extends PerformanceTestsConfig {
     val token = CcdTokenGenerator.generateGatewayS2SToken()
     val userToken = CcdTokenGenerator.generateWebUserToken(CreateCaseUrl)
     exec(
-         http("get create case event token")
+         //http("get create case event token")
+           http("TX02_CCD_CreateCaseEndpoint_createcase_eventtoken")
            .get(CreateCaseTokenUrl)
            .header("ServiceAuthorization", token)
            .header("Authorization", userToken)
            .header("Content-Type","application/json")
            .check(status.is(200),jsonPath("$.token").saveAs("eventToken"))
       ).exec(
-        http("create case data")
+        //http("create case data")
+        http("TX02_CCD_CreateCaseEndpoint_createcasedata")
         .post(CreateCaseUrl)
         .body(
           EventBody).asJSON
@@ -120,8 +124,15 @@ object PostCaseData extends PerformanceTestsConfig {
   }
 
 
-  val   createCaseData = scenario("Create Case Data")
-    .exec(createCaseDatahttp())
+  println("PostCaseData: Minimum think time " + minThinkTime + " Maximum think time " + maxThinkTime)
 
+  val   createCaseData = scenario("Create Case Data").during(totalRunDuration minutes) {
+      exec(
+          createCaseDatahttp()
+      )
+      .pause(minThinkTime seconds, maxThinkTime seconds)
+  }
+
+  val waitForNextIteration = pace(MinWaitForNextIteration seconds, MaxWaitForNextIteration seconds)
 }
 
