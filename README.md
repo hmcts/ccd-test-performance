@@ -24,7 +24,11 @@
 
     mvn package
     
-    then run ./launch to start a simulation
+    then run the simulation with: 
+    
+    export ENVIRONMENT=enviroment_name
+    
+    ./launch path_to_fat_jar
 
 ## LICENSE
 
