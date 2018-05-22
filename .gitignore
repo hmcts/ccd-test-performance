@@ -2,3 +2,10 @@
 .idea/*
 target/*
 
+*.iws
+*.iml
+*.ipr
+
+build/
+.gradle/
+out/
