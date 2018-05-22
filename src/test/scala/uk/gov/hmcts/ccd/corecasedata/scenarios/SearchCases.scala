@@ -22,13 +22,13 @@ object SearchCases extends PerformanceTestsConfig {
       .check(status in  (200))
   }
 
-  println("SearchCases: Minimum think time " + minThinkTime + " Maximum think time " + maxThinkTime)
+  println("SearchCases: Minimum think time " + MinThinkTime + " Maximum think time " + MaxThinkTime)
 
-  val searchCases = scenario("search cases").during(totalRunDuration minutes) {
+  val searchCases = scenario("search cases").during(TotalRunDuration minutes) {
       exec(
           httpRequest()
       )
-      .pause(minThinkTime seconds, maxThinkTime seconds)
+      .pause(MinThinkTime seconds, MaxThinkTime seconds)
   }
 
   val waitForNextIteration = pace(MinWaitForNextIteration seconds, MaxWaitForNextIteration seconds)
