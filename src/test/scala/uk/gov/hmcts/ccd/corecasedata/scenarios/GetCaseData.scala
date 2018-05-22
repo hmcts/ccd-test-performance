@@ -36,12 +36,12 @@ object GetCaseData extends PerformanceTestsConfig {
     getCaseUrl.replace(":case_reference", pickRandomReference().replaceAll("-", ""))
   }
 
-  println("GetCaseData: Minimum think time " + minThinkTime + " Maximum think time " + maxThinkTime)
-  val scenarios = scenario("Get Case Data").during(totalRunDuration minutes) {
+  println("GetCaseData: Minimum think time " + MinThinkTime + " Maximum think time " + MaxThinkTime)
+  val scenarios = scenario("Get Case Data").during(TotalRunDuration minutes) {
       exec(
         getCaseDataHttp()
       )
-      .pause(minThinkTime seconds, maxThinkTime seconds)
+      .pause(MinThinkTime seconds, MaxThinkTime seconds)
   }
 
   val waitForNextIteration = pace(MinWaitForNextIteration seconds, MaxWaitForNextIteration seconds)
