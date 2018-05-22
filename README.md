@@ -1,15 +1,10 @@
 # Performance Test CCD
 
-## Domains Covered:
-1 - Core Case Data
-
-2 - User Profile
-
 ## To Run:
 
 - Specify the environment against which to test. Default environment is Dev. The list of supported environments and their required configuration is in src/test/resources/application.conf
 
-    export ENVIRONMENT=<enviroment name>
+    export ENVIRONMENT=enviroment_name
 
     e.g: export ENVIRONMENT=cnp
 
@@ -21,9 +16,16 @@
     
 - To run a specific simulation
   
-    mvn clean gatling:test -Dgatling.simulationClass=<simulation class name>
+    mvn clean gatling:test -Dgatling.simulationClass=simulation_class_name
     
     e.g: mvn clean gatling:test -Dgatling.simulationClass=uk.gov.hmcts.ccd.simulation.CreateCasesSimulation
+
+- To create a fat jar with all dependencies 
+
+    mvn package
+    
+    then run ./launch to start a simulation
+
 ## LICENSE
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
