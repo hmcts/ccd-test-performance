@@ -22,13 +22,13 @@ object GetUserProfile extends PerformanceTestsConfig {
       .check(status in  (200))
   }
 
-  println("GetUserProfile: Minimum think time " + minThinkTime + " Maximum think time " + maxThinkTime)
+  println("GetUserProfile: Minimum think time " + MinThinkTime + " Maximum think time " + MaxThinkTime)
 
-  val scenarios = scenario("Get user profile").during(totalRunDuration minutes) {
+  val scenarios = scenario("Get user profile").during(TotalRunDuration minutes) {
       exec(
         call()
       )
-      .pause(minThinkTime seconds, maxThinkTime seconds)
+      .pause(MinThinkTime seconds, MaxThinkTime seconds)
   }
 
   val waitForNextIteration = pace(MinWaitForNextIteration seconds, MaxWaitForNextIteration seconds)
