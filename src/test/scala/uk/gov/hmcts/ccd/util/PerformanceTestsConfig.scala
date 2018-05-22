@@ -17,6 +17,16 @@ trait PerformanceTestsConfig {
   val CaseDefinitionUrl = config.getString("caseDefinitionUrl")
   val MaxSimulationDuration = config.getInt("maxSimulationDurationMinutes")
   val RequestRateSec = Option(System.getProperty("request.rate")).map(_.toDouble)
+  val MinThinkTime = config.getInt("minthinktime")
+  val MaxThinkTime = config.getInt("maxthinktime")
+  val MinWaitForNextIteration = config.getInt("minWaitForNextIteration")
+  val MaxWaitForNextIteration = config.getInt("maxWaitForNextIteration")
+  val TotalRunDuration = config.getInt("totalDuration")
+  val ReachRPSTarget = config.getInt("reachRPSTarget")
+  val ReachRPSDuration = config.getInt("reachRPSDuration")
+  val ReachRPSHoldForDuration = config.getInt("reachRPSHoldForDuration")
+  val JumptoRPSTarget = config.getInt("jumptoRPSTarget")
+  val JumptoRPSDuration = config.getInt("jumptoRPSDuration")
 
   def caseDataUrl(path: String) = config.getString("caseDataUrl") + "/" + path
   def cases: Option[List[String]] = config.getOptionalStringList("cases")

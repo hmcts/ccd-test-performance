@@ -14,7 +14,8 @@ class SearchCasesSimulation extends CCDSimulation {
 //        constantUsersPerSec(1) during(1 minute)
 //    )
       SearchCases.searchCases.inject(
-        constantUsersPerSec(10) during(1 minute)
+        atOnceUsers(10)
+        //constantUsersPerSec(10) during(1 minute)
       )
   )
 

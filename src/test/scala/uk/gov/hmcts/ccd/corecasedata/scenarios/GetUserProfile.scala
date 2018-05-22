@@ -3,6 +3,7 @@ package uk.gov.hmcts.ccd.corecasedata.scenarios
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import uk.gov.hmcts.ccd.util.{CcdTokenGenerator, PerformanceTestsConfig}
+import scala.concurrent.duration._
 
 object GetUserProfile extends PerformanceTestsConfig {
 
@@ -12,7 +13,8 @@ object GetUserProfile extends PerformanceTestsConfig {
   def call() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
     val userToken = CcdTokenGenerator.generateWebUserToken(endpointUrl)
-    http("get user profile")
+    //http("get user profile")
+    http("TX05_CCD_GetUserProfileEndpoint_getuserprofile")
       .get(_ => endpointUrl)
       .header("ServiceAuthorization", s2sToken)
       .header("Authorization", userToken)
@@ -20,6 +22,14 @@ object GetUserProfile extends PerformanceTestsConfig {
       .check(status in  (200))
   }
 
-  val scenarios = scenario("Get user profile")
-    .exec(call())
+  println("GetUserProfile: Minimum think time " + MinThinkTime + " Maximum think time " + MaxThinkTime)
+
+  val scenarios = scenario("Get user profile").during(TotalRunDuration minutes) {
+      exec(
+        call()
+      )
+      .pause(MinThinkTime seconds, MaxThinkTime seconds)
+  }
+
+  val waitForNextIteration = pace(MinWaitForNextIteration seconds, MaxWaitForNextIteration seconds)
 }
