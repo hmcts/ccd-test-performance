@@ -124,13 +124,13 @@ object PostCaseData extends PerformanceTestsConfig {
   }
 
 
-  println("PostCaseData: Minimum think time " + minThinkTime + " Maximum think time " + maxThinkTime)
+  println("PostCaseData: Minimum think time " + MinThinkTime + " Maximum think time " + MaxThinkTime)
 
-  val   createCaseData = scenario("Create Case Data").during(totalRunDuration minutes) {
+  val   createCaseData = scenario("Create Case Data").during(TotalRunDuration minutes) {
       exec(
           createCaseDatahttp()
       )
-      .pause(minThinkTime seconds, maxThinkTime seconds)
+      .pause(MinThinkTime seconds, MaxThinkTime seconds)
   }
 
   val waitForNextIteration = pace(MinWaitForNextIteration seconds, MaxWaitForNextIteration seconds)
