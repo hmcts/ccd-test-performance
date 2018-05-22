@@ -6,7 +6,7 @@ then
     echo
     echo "Required Parameters : "
     echo
-    echo " <jar directory path> : directory containing the performance tests jar. Required"
+    echo " <jar directory path> : directory containing the performance tests jar. Required. Example './launch ./target'"
     echo
    exit 0;
  fi
