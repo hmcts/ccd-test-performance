@@ -6,6 +6,9 @@ buildscript {
         classpath "io.spring.gradle:dependency-management-plugin:0.5.3.RELEASE"
     }
     dependencies {
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2"
+    }
+    dependencies {
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
     }
 }
@@ -13,6 +16,10 @@ buildscript {
 plugins {
     // Apply the scala plugin to add support for Scala
     id 'scala'
+    id 'org.owasp.dependencycheck' version '3.1.2'
+    id 'se.patrikerdes.use-latest-versions' version '0.2.1'
+    id 'com.github.ben-manes.versions' version '0.17.0'
+    id 'org.sonarqube' version '2.6.2'
 }
 
 repositories {
@@ -24,6 +31,14 @@ repositories {
 
 apply plugin: 'scala'
 apply plugin: "io.spring.dependency-management"
+
+// for pipeline
+apply plugin: "org.sonarqube"
+apply plugin: 'org.owasp.dependencycheck'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'se.patrikerdes.use-latest-versions'
+
 
 ext {
     gatlingVersion = '2.3.0'
