@@ -51,13 +51,13 @@ object PostEvent extends PerformanceTestsConfig {
     )
   }
 
-  println("PostEvent: Minimum think time " + minThinkTime + " Maximum think time " + maxThinkTime)
+  println("PostEvent: Minimum think time " + MinThinkTime + " Maximum think time " + MaxThinkTime)
 
-  val saveEventData = scenario("Save event").during(totalRunDuration minutes) {
+  val saveEventData = scenario("Save event").during(TotalRunDuration minutes) {
       exec(
           saveEventDataHttp()
       )
-      .pause(minThinkTime seconds, maxThinkTime seconds)
+      .pause(MinThinkTime seconds, MaxThinkTime seconds)
   }
 
   val waitForNextIteration = pace(MinWaitForNextIteration seconds, MaxWaitForNextIteration seconds)
