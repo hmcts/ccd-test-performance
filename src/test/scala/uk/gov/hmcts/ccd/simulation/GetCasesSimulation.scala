@@ -14,8 +14,9 @@ class GetCasesSimulation extends CCDSimulation {
 
   val scenarios = List(
       GetCaseData.scenarios.inject(
-//        rampUsersPerSec(1) to 10 during(5 seconds)
-        constantUsersPerSec(requestRate) during(1 minutes)
+        atOnceUsers(1)
+        //rampUsersPerSec(1) to 10 during(5 seconds)
+        //constantUsersPerSec(requestRate) during(1 minutes)
       )
   )
 
