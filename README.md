@@ -28,7 +28,7 @@
     
     export ENVIRONMENT=enviroment_name
     
-    ./launch path_to_fat_jar
+    ./launch.sh path_to_fat_jar (e.g. ./launch.sh ./target)
 
 ## LICENSE
 
