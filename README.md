@@ -39,12 +39,12 @@
     then set the environment and run the simulation with: 
     
     ```    
-    ./launch.sh {path_to_fat_jar} 
+    ./launch.sh {path_to_fat_jar} {fully_qualified_simulation_name}
     ```
     e.g.:
     
     ```
-    ./launch.sh ./target
+    ./launch.sh ./target uk.gov.hmcts.ccd.simulation.UserProfileSimulation
     ```
     
 ## LICENSE

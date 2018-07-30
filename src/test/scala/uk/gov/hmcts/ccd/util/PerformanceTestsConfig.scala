@@ -53,4 +53,15 @@ object PerformanceTestsConfig {
     println("Loading default config")
     cfg
   })
+
+  val proxyHostOptional = config.getOptionalString("httpProxyHost")
+  val proxyPortOptional = config.getOptionalString("httpProxyPort")
+
+  for (
+    host <- proxyHostOptional;
+    port <- proxyPortOptional
+  ) {
+    System.setProperty("http.proxyHost", host)
+    System.setProperty("http.proxyPort", port)
+  }
 }
