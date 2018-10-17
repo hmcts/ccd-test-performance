@@ -29,6 +29,7 @@ trait PerformanceTestsConfig {
   val JumptoRPSDuration = config.getInt("jumptoRPSDuration")
 
   def caseDataUrl(path: String) = config.getString("caseDataUrl") + "/" + path
+  def caseDefinitionUrl(path: String) = config.getString("caseDefinitionUrl") + "/" + path
   def cases: Option[List[String]] = config.getOptionalStringList("cases")
 
   def pickRandomReference(): String = {

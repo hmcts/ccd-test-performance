@@ -92,6 +92,13 @@
 			<version>3.0.1</version>
 		</dependency>
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>jcenter-bintray</id>
+			<name>JCenter Repository</name>
+			<url>http://jcenter.bintray.com/</url>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>
