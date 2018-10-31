@@ -37,7 +37,7 @@ object CcdTokenGenerator extends PerformanceTestsConfig with SpringApplicationCo
   }
 
   private def roleFor(url: String) = {
-    val result = "caseworker" + parseJurisdiction(url).map(j => s"-$j").getOrElse("")
+    val result = "caseworker,caseworker-autotest1,caseworker-autotest1-junior,caseworker-autotest1-senior,caseworker-autotest1-manager,caseworker-autotest2,caseworker-loa1,caseworker-autotest1-loa1,caseworker-autotest1-junior-loa1,caseworker-autotest1-senior-loa1,caseworker-autotest1-manager-loa1,caseworker-autotest2-loa1" + parseJurisdiction(url).map(j => s"-$j").getOrElse("")
     println(s"role used for user token generation: $result")
     result
   }
