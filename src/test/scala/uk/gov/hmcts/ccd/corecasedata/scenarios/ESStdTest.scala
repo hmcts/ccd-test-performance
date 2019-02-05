@@ -99,8 +99,8 @@ object ESStdTest extends PerformanceTestsConfig {
         http("TX02_CCD_CreateCaseEndpoint_createcasedata")
         .post(CreateCaseUrl)
         /*.body(
-          EventBody).asJSON*/
-          .body(EventBodyMain).asJSON
+          EventBody).asJson*/
+          .body(EventBodyMain).asJson
         .header("ServiceAuthorization", token)
         .header("Authorization", userToken)
         .header("Content-Type","application/json")
@@ -176,7 +176,7 @@ object ESStdTest extends PerformanceTestsConfig {
       //http("create case data")
       http("TX02_CCD_CreateCaseEndpoint_createcasedata")
         .post(CreateCaseUrl)
-        .body(EventBodyMain).asJSON
+        .body(EventBodyMain).asJson
         .header("ServiceAuthorization", token)
         .header("Authorization", userToken)
         .header("Content-Type","application/json")
@@ -191,8 +191,8 @@ object ESStdTest extends PerformanceTestsConfig {
           .post(url)
           .queryParam("ctid", "AAT")
           .body(
-            ESSearchONReferenceMetaDataReqPayload).asJSON
-         // .body(StringBody("""{"query": {"bool": {"filter": {"wildcard": {"reference": """"  + "${ESNew_Case_Id}" +   """""}}}}""")).asJSON
+            ESSearchONReferenceMetaDataReqPayload).asJson
+         // .body(StringBody("""{"query": {"bool": {"filter": {"wildcard": {"reference": """"  + "${ESNew_Case_Id}" +   """""}}}}""")).asJson
           .header("ServiceAuthorization", token)
           .header("Authorization", userToken)
           .header("Content-Type","application/json")

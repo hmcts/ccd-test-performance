@@ -37,7 +37,7 @@ object ESSeachONTextArea extends PerformanceTestsConfig {
       .post(url)
       .queryParam("ctid", "AAT")
       .body(
-        ESSeachONTextAreaReqPayload).asJSON
+        ESSeachONTextAreaReqPayload).asJson
       .header("ServiceAuthorization", s2sToken)
       .header("Authorization", userToken)
       .header("Content-Type","application/json")

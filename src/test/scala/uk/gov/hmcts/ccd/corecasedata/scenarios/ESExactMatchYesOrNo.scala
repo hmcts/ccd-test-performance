@@ -35,7 +35,7 @@ object ESExactMatchYesOrNo extends PerformanceTestsConfig {
       .post(url)
       .queryParam("ctid", "AAT")
       .body(
-        ESExactMatchYesOrNoReqPayload).asJSON
+        ESExactMatchYesOrNoReqPayload).asJson
       .header("ServiceAuthorization", s2sToken)
       .header("Authorization", userToken)
       .header("Content-Type","application/json")

@@ -63,10 +63,7 @@ class CCDPTSimulation extends CCDSimulation {
 */
 
   val scenarios = List(
-    ESMatchAllCases.ESMatchAll_Return50Cases.inject(rampUsers(1) over(1 minutes)),
-    ESExactMatchYesOrNo.ESExactMatchYesOrNoSCN.inject(rampUsers(1) over(1 minutes)),
-    ESSeachONTextArea.ESSeachONTextAreaSCN.inject(rampUsers(1) over(1 minutes)),
-    ESStdTest.ESStdTEST.inject(rampUsers(1) over(1 minutes))
+    ESMatchAllCases.ESMatchAll_Return50Cases.inject(atOnceUsers(1))
   )
 
 
