@@ -20,7 +20,10 @@ object PostUserProfile extends PerformanceTestsConfig {
     exec(
         http("create a user profile")
         .post(url)
-        .body(StringBody("""{ "id":""""  + "${userEmailprefix}" +   """@perftest.com", "jurisdictions":[{"id":"DIVORCE"}],"work_basket_default_case_type":"Case1", "work_basket_default_jurisdiction":"DIVORCE","work_basket_default_state":"state1" }""")).asJSON
+        .body(StringBody("""{ "id":""""  + "${userEmailprefix}" +
+                         """@perftest.com", "jurisdictions":[{"id":"DIVORCE"}],
+                           |"work_basket_default_case_type":"Case1", "work_basket_default_jurisdiction":"DIVORCE","work_basket_default_state":"state1" }"""
+                           .stripMargin)).asJson
         .header("ServiceAuthorization", token)
         .header("Authorization", CcdTokenGenerator.generateWebUserToken(url))
         .check(status is 201)

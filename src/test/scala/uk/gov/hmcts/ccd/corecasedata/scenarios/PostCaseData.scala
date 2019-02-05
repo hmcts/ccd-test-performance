@@ -100,8 +100,8 @@ object PostCaseData extends PerformanceTestsConfig {
         http("TX02_CCD_CreateCaseEndpoint_createcasedata")
         .post(CreateCaseUrl)
         /*.body(
-          EventBody).asJSON*/
-          .body(EventBodyMain).asJSON
+          EventBody).asJson*/
+          .body(EventBodyMain).asJson
         .header("ServiceAuthorization", token)
         .header("Authorization", userToken)
         .header("Content-Type","application/json")
@@ -159,7 +159,7 @@ object PostCaseData extends PerformanceTestsConfig {
       //http("create case data")
       http("TX02_CCD_CreateCaseEndpoint_createcasedata")
         .post(CreateCaseUrl)
-        .body(EventBodyMain).asJSON
+        .body(EventBodyMain).asJson
         .header("ServiceAuthorization", token)
         .header("Authorization", userToken)
         .header("Content-Type","application/json")

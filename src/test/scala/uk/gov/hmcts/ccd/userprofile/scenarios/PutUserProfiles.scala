@@ -12,7 +12,9 @@ object PutUserProfiles extends PerformanceTestsConfig {
 
     http("update a user profile")
       .put(s"$UserProfileUrl/user-profile/users")
-      .body(StringBody("""[{ "id": "3@perftest.com", "jurisdictions":[{"id":"DIVORCE"}],"work_basket_default_case_type":"Case1", "work_basket_default_jurisdiction":"DIVORCE","work_basket_default_state":"state1" }]""")).asJSON
+      .body(StringBody(
+        """[{ "id": "3@perftest.com", "jurisdictions":[{"id":"DIVORCE"}],"work_basket_default_case_type":"Case1",
+          |"work_basket_default_jurisdiction":"DIVORCE","work_basket_default_state":"state1" }]""".stripMargin)).asJson
       .header("ServiceAuthorization", token)
       .check(status is 201)
   }

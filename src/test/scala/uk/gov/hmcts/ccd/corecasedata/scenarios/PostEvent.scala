@@ -43,7 +43,7 @@ object PostEvent extends PerformanceTestsConfig {
          http("TX04_CCD_SaveEventEndpoint")
         .post(SaveEventUrl)
         .body(
-          EventBody).asJSON
+          EventBody).asJson
         .header("ServiceAuthorization", token)
         .header("Authorization", userToken)
         .header("Content-Type","application/json")
