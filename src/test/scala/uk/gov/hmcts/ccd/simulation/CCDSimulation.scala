@@ -33,7 +33,7 @@ abstract class CCDSimulation extends Simulation with PerformanceTestsConfig {
   def setup() = setUp(scenarios())
     .protocols(getHttpConf())
    /* .throttle(
-      reachRps(ReachRPSTarget) in (ReachRPSDuration minutes),
+      reachRps(ReachRPSTarget) in (ReachRPSDuration seconds),
       holdFor(ReachRPSHoldForDuration minutes),
       jumpToRps(JumptoRPSTarget),
       holdFor(JumptoRPSDuration minutes)

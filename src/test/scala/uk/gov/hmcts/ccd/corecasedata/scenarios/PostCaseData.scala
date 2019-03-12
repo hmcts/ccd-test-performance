@@ -39,9 +39,9 @@ object PostCaseData extends PerformanceTestsConfig {
 
   println("create case url: " + CreateCaseUrl)
 
-    //val caseTypeValue = Array("AAT","CASETYPE2","CASETYPE3","CASETYPE4")
-  val caseTypeValue = Array("ATCASETYPE1","ATCASETYPE2","ATCASETYPE3","ATCASETYPE4")
-  val jurisdictionsValue = Array("AUTOTEST2")
+    val caseTypeValue = Array("AAT","CASETYPE2","CASETYPE3","CASETYPE4")
+  //val caseTypeValue = Array("ATCASETYPE1","ATCASETYPE2","ATCASETYPE3","ATCASETYPE4")
+  val jurisdictionsValue = Array("AUTOTEST1")
 
   val rand = new Random(System.currentTimeMillis())
   val caseType_random_index = rand.nextInt(caseTypeValue.length)

@@ -37,7 +37,11 @@ object CcdTokenGenerator extends PerformanceTestsConfig with SpringApplicationCo
   }
 
   private def roleFor(url: String) = {
-    val result = "caseworker,caseworker-autotest1,caseworker-autotest1-junior,caseworker-autotest1-senior,caseworker-autotest1-manager,caseworker-autotest2,caseworker-loa1,caseworker-autotest1-loa1,caseworker-autotest1-junior-loa1,caseworker-autotest1-senior-loa1,caseworker-autotest1-manager-loa1,caseworker-autotest2-loa1" + parseJurisdiction(url).map(j => s"-$j").getOrElse("")
+    val result = "caseworker-cmc,caseworker,caseworker-cmc-loa1,caseworker-loa1" + parseJurisdiction(url).map(j => s"-$j").getOrElse("")
+    //val result = "caseworker,caseworker-divorce,caseworker-autotest1,caseworker-sscs,caseworker-divorce-courtadmin,caseworker-loa1,caseworker-divorce-loa1,caseworker-autotest1-loa1,caseworker-sscs-loa1,caseworker-divorce-courtadmin-loa1" + parseJurisdiction(url).map(j => s"-$j").getOrElse("")
+   //val result = "caseworker,caseworker-autotest1,caseworker-autotest1-junior,caseworker-autotest1-senior,caseworker-autotest1-manager,caseworker-autotest2,caseworker-loa1,caseworker-autotest1-loa1,caseworker-autotest1-junior-loa1,caseworker-autotest1-senior-loa1,caseworker-autotest1-manager-loa1,caseworker-autotest2-loa1" + parseJurisdiction(url).map(j => s"-$j").getOrElse("")
+    //val result = "caseworker,caseworker-autotest1,caseworker-autotest1-solicitor,,caseworker-autotest2,caseworker-autotest2-solicitor,caseworker,caseworker-loa1,caseworker-autotest1-loa1,caseworker-autotest1-solicitor-loa1,caseworker-loa1,caseworker,caseworker-autotest1,caseworker-autotest1-solicitor,,caseworker-autotest2,caseworker-autotest2-solicitor,caseworker,caseworker-loa1,caseworker-autotest1-loa1,caseworker-autotest1-solicitor-loa1,caseworker-loa1-loa0" + parseJurisdiction(url).map(j => s"-$j").getOrElse("")
+
     println(s"role used for user token generation: $result")
     result
   }

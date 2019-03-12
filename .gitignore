@@ -5,3 +5,4 @@ results/
 src.zip
 .DS_Store
 /gatling.log
+*.zip

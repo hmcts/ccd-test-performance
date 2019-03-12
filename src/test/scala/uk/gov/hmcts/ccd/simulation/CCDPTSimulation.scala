@@ -2,8 +2,7 @@ package uk.gov.hmcts.ccd.simulation
 
 import io.gatling.core.Predef._
 import uk.gov.hmcts.ccd.corecasedata.scenarios._
-import uk.gov.hmcts.ccd.casedefinition.scenarios._
-import uk.gov.hmcts.ccd.corecasedata.scenarios._
+import uk.gov.hmcts.ccd.data._
 
 
 import scala.concurrent.duration._
@@ -15,58 +14,9 @@ class CCDPTSimulation extends CCDSimulation {
   val baseHttpUrl: String = config.getString("caseDataUrl")
 
 
-  /*
-   val scenarios = List(
-      GetCaseData.scenarios.inject(
-        atOnceUsers(1)),
-      PostCaseData.createCaseData.inject(
-        atOnceUsers(1)),
-      SearchCases.searchCases.inject(
-        atOnceUsers(10)),
-      PostEvent.saveEventData.inject(
-        atOnceUsers(1)),
-      GetUserProfile.scenarios.inject(
-        atOnceUsers(1))
-    )
-   */
-
-
-  /*
-  User Concurrency Stress Test
-   minthinktime = 2
-  maxthinktime = 3
-  minWaitForNextIteration = 4
-  maxWaitForNextIteration = 5
-  totalDuration = 1000
-
-
-
   val scenarios = List(
-    GetCaseData.scenarios.inject(splitUsers(1000) into(rampUsers(10) over(5 minutes)) separatedBy(5 minutes)),
-    PostCaseData.createCaseData.inject(splitUsers(1000) into(rampUsers(10) over(5 minutes)) separatedBy(5 minutes)),
-    SearchCases.searchCases.inject(splitUsers(1000) into(rampUsers(10) over(5 minutes)) separatedBy(5 minutes)),
-    PostEvent.saveEventData.inject(splitUsers(1000) into(rampUsers(10) over(5 minutes)) separatedBy(5 minutes)),
-    GetUserProfile.scenarios.inject(splitUsers(1000) into(rampUsers(10) over(5 minutes)) separatedBy(5 minutes))
-  )
-*/
-
-
-
-  /* Single User Test
-   minthinktime = 2
-    maxthinktime = 3
-    minWaitForNextIteration = 4
-    maxWaitForNextIteration = 5
-    totalDuration = 2
-
-
-*/
-
-  val scenarios = List(
-    ESMatchAllCases.ESMatchAll_Return50Cases.inject(rampUsers(1) over(1 minutes)),
-    ESExactMatchYesOrNo.ESExactMatchYesOrNoSCN.inject(rampUsers(1) over(1 minutes)),
-    ESSeachONTextArea.ESSeachONTextAreaSCN.inject(rampUsers(1) over(1 minutes)),
-    ESStdTest.ESStdTEST.inject(rampUsers(1) over(1 minutes))
+    //GetCaseDataV2.GetCaseDataV2Scenarios.inject(rampUsers(500) over(15 minutes))
+   CreateCMCCaseData.CreateCMCCaseDataSCN.inject(rampUsers(1) over(1 minutes))
   )
 
 
