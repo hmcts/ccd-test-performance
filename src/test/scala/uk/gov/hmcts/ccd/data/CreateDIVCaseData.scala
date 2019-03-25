@@ -1,4 +1,4 @@
-package uk.gov.hmcts.ccd.corecasedata.scenarios
+package uk.gov.hmcts.ccd.data
 
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
@@ -8,9 +8,9 @@ import scala.concurrent.duration._
 import scala.util.Random
 
 
-object CreateDIVCaseDataKJ extends PerformanceTestsConfig {
+object CreateDIVCaseData extends PerformanceTestsConfig {
 
- // val EventId = "applyForGrant"
+
   private val rng: Random = new Random()
   private def d8MarriagePetitionerName(): String = rng.alphanumeric.take(10).mkString
   private def d8MarriageRespondentName(): String = rng.alphanumeric.take(10).mkString
@@ -27,13 +27,17 @@ object CreateDIVCaseDataKJ extends PerformanceTestsConfig {
   private def burnid(): Int = rng.nextInt(99999999)
   private def d8MarriageDate(): Int = rng.nextInt(999)
 
- // val EventId = "CREATE"
+
   val randcaseType = new Random(System.currentTimeMillis())
+
   val caseEventTypeValue = Array("CREATE")
+
   val caseTypeValue_random_index = randcaseType.nextInt(caseEventTypeValue.length)
+
   val EventId = caseEventTypeValue(caseTypeValue_random_index)
+
   def PickCaseType(): String = EventId
- //def PickCaseType(): String = caseEventTypeValue(randcaseType.nextInt(caseEventTypeValue.length))
+
 
   println("caseTypeText Value   " + EventId)
   println("caseTypeText Value   " + PickCaseType())
@@ -42,9 +46,17 @@ object CreateDIVCaseDataKJ extends PerformanceTestsConfig {
 
   println("create case url: " + CreateCaseUrl)
 
+  //val D8MarriageDateYear = Array("2000","1990","1995","1980","1985","1970","1975")
+
+  //val d8MarriageDate_rand = new Random(System.currentTimeMillis())
+ // val D8MarriageDateYear_random_index = d8MarriageDate_rand.nextInt(D8MarriageDateYear.length)
+ // val D8MarriageDateYearVal = D8MarriageDateYear(D8MarriageDateYear_random_index)
+ // def d8MarriageDate(): String =   D8MarriageDateYearVal
+
     val caseTypeValue = Array("DIVORCE")
   //val caseTypeValue = Array("ATCASETYPE1","ATCASETYPE2","ATCASETYPE3","ATCASETYPE4")
   val jurisdictionsValue = Array("DIVORCE")
+
 
   val rand = new Random(System.currentTimeMillis())
   val caseType_random_index = rand.nextInt(caseTypeValue.length)

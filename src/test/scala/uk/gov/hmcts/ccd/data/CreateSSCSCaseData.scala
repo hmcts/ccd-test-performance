@@ -1,4 +1,4 @@
-package uk.gov.hmcts.ccd.corecasedata.scenarios
+package uk.gov.hmcts.ccd.data
 
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
@@ -8,7 +8,7 @@ import scala.concurrent.duration._
 import scala.util.Random
 
 
-object CreateSSCSCaseDataKJ extends PerformanceTestsConfig {
+object CreateSSCSCaseData extends PerformanceTestsConfig {
 
  // val EventId = "applyForGrant"
   private val rng: Random = new Random()
