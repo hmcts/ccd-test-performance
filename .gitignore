@@ -1,5 +1,8 @@
 *.iml
 .idea/*
 target/*
-
+results/
+src.zip
+.DS_Store
 /gatling.log
+*.zip

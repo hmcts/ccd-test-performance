@@ -32,12 +32,12 @@ abstract class CCDSimulation extends Simulation with PerformanceTestsConfig {
 
   def setup() = setUp(scenarios())
     .protocols(getHttpConf())
-    .throttle(
-      reachRps(ReachRPSTarget) in (ReachRPSDuration minutes),
+   /* .throttle(
+      reachRps(ReachRPSTarget) in (ReachRPSDuration seconds),
       holdFor(ReachRPSHoldForDuration minutes),
       jumpToRps(JumptoRPSTarget),
       holdFor(JumptoRPSDuration minutes)
-    )
+    )*/
     .assertions(
       global.responseTime.mean.lt(config.getInt("meanResponseTime"))
 
