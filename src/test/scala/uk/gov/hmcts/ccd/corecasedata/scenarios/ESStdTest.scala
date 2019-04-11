@@ -5,12 +5,10 @@ import io.gatling.http.Predef._
 import uk.gov.hmcts.ccd.util.{CcdTokenGenerator, PerformanceTestsConfig}
 
 import scala.concurrent.duration._
-import java.text.SimpleDateFormat
-
 import scala.util.Random
 
 
-object PostCaseData extends PerformanceTestsConfig {
+object ESStdTest extends PerformanceTestsConfig {
 
  // val EventId = "applyForGrant"
   private val rng: Random = new Random()
@@ -32,16 +30,17 @@ object PostCaseData extends PerformanceTestsConfig {
   def PickCaseType(): String = EventId
  //def PickCaseType(): String = caseEventTypeValue(randcaseType.nextInt(caseEventTypeValue.length))
 
-  println("caseTypeText Value   " + EventId)
-  println("caseTypeText Value   " + PickCaseType())
+  println("ES caseTypeText Value   " + EventId)
+  println("ES caseTypeText Value   " + PickCaseType())
 
   var CreateCaseUrl = caseDataUrl(config.getString("createCaseUrl"))
 
-  println("create case url: " + CreateCaseUrl)
+  println("ES create case url: " + CreateCaseUrl)
 
     //val caseTypeValue = Array("AAT","CASETYPE2","CASETYPE3","CASETYPE4")
-  val caseTypeValue = Array("ATCASETYPE1","ATCASETYPE2","ATCASETYPE3","ATCASETYPE4")
-  val jurisdictionsValue = Array("AUTOTEST2")
+  //val caseTypeValue = Array("ATCASETYPE1","ATCASETYPE2","ATCASETYPE3","ATCASETYPE4")
+  val caseTypeValue = Array("AAT")
+  val jurisdictionsValue = Array("AUTOTEST1")
 
   val rand = new Random(System.currentTimeMillis())
   val caseType_random_index = rand.nextInt(caseTypeValue.length)
@@ -132,8 +131,26 @@ object PostCaseData extends PerformanceTestsConfig {
       .pause(MinThinkTime seconds, MaxThinkTime seconds)
   }
 */
+ private val url: String = config.getString("caseDataUrl") + "/" + config.getString("ESSearch")
+  println("Elastic Search on reference metadata PT - URL: " + url)
 
-  val   createCaseData = scenario("Create Case Data").during(TotalRunDuration minutes) {
+  val ESSearchONReferenceMetaDataReqPayload = StringBody(
+                            """
+                                {
+                                   "query":{
+                                      "bool":{
+                                         "filter":{
+                                            "match":{
+                                               "reference":"${ESNew_Case_Id}"
+                                            }
+                                         }
+                                      }
+                                   }
+                                }
+                              """
+                            )
+
+  val   ESStdTEST = scenario("CCD Create Case Data").during(TotalRunDuration minutes) {
     exec(
       _.setAll(
         ("FirstpageText", firstpageText()),
@@ -163,8 +180,24 @@ object PostCaseData extends PerformanceTestsConfig {
         .header("ServiceAuthorization", token)
         .header("Authorization", userToken)
         .header("Content-Type","application/json")
+        .check(jsonPath("$.id").saveAs("ESNew_Case_Id"))
         .check(status is 201)
     )
+
+      .pause(MinThinkTime seconds, MaxThinkTime seconds)
+
+      .exec(
+        http("TX13_CCD_ElasticSearchEndpoint_ReferenceMetaDataSearch")
+          .post(url)
+          .queryParam("ctid", "AAT")
+          .body(
+            ESSearchONReferenceMetaDataReqPayload).asJson
+         // .body(StringBody("""{"query": {"bool": {"filter": {"wildcard": {"reference": """"  + "${ESNew_Case_Id}" +   """""}}}}""")).asJson
+          .header("ServiceAuthorization", token)
+          .header("Authorization", userToken)
+          .header("Content-Type","application/json")
+          .check(status in  (200))
+      )
 
       .pause(MinThinkTime seconds, MaxThinkTime seconds)
   }
