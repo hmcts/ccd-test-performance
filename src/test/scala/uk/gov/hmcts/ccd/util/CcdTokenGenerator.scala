@@ -37,7 +37,9 @@ object CcdTokenGenerator extends PerformanceTestsConfig with SpringApplicationCo
   }
 
   private def roleFor(url: String) = {
-    val result = "caseworker,caseworker-autotest1,caseworker-autotest1-junior,caseworker-autotest1-senior,caseworker-autotest1-manager,caseworker-autotest2,caseworker-loa1,caseworker-autotest1-loa1,caseworker-autotest1-junior-loa1,caseworker-autotest1-senior-loa1,caseworker-autotest1-manager-loa1,caseworker-autotest2-loa1" + parseJurisdiction(url).map(j => s"-$j").getOrElse("")
+    /*val result = "caseworker,caseworker-divorce,caseworker-divorce-courtadmin,caseworker-divorce-financialremedy,caseworker-divorce-financialremedy-courtadmin,caseworker-probate,caseworker-probate-issuer,caseworker-probate-examiner,caseworker-probate-authoriser,caseworker-sscs,caseworker-cmc,caseworker-test,caseworker-test-manager,caseworker-test-junior,caseworker-test-senior,caseworker-test-public,caseworker-test-private,caseworker-test-protected,caseworker-reference-data,caseworker-publiclaw,caseworker-publiclaw-cafcass,caseworker-privatelaw,caseworker-privatelaw-courtadmin,caseworker-privatelaw-casecreator,caseworker-privatelaw-cafcass,caseworker,payments,caseworker-loa1,caseworker-divorce-loa1,caseworker-divorce-courtadmin-loa1,caseworker-divorce-financialremedy-loa1,caseworker-divorce-financialremedy-courtadmin-loa1,caseworker-probate-loa1,caseworker-probate-issuer-loa1,caseworker-probate-examiner-loa1,caseworker-probate-authoriser-loa1,caseworker-sscs-loa1,caseworker-cmc-loa1,caseworker-test-loa1,caseworker-test-manager-loa1,caseworker-test-junior-loa1,caseworker-test-senior-loa1,caseworker-test-public-loa1,caseworker-test-private-loa1,caseworker-test-protected-loa1,caseworker-reference-data-loa1,caseworker-publiclaw-loa1,caseworker-publiclaw-cafcass-loa1,caseworker-privatelaw-loa1,caseworker-privatelaw-courtadmin-loa1,caseworker-privatelaw-casecreator-loa1,caseworker-privatelaw-cafcass-loa1,caseworker-loa1,payments-loa1"
+    */
+    val result = "caseworker" + parseJurisdiction(url).map(j => s"-$j").getOrElse("")
     println(s"role used for user token generation: $result")
     result
   }

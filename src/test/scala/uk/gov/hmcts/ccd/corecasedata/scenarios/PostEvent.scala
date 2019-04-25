@@ -8,7 +8,7 @@ import scala.concurrent.duration._
 object PostEvent extends PerformanceTestsConfig {
 
  // val EventId = "updateContactDetails"
-  val EventId = "UPDATE"
+  val EventId = "eventsUpdates"
   val SaveEventUrl = caseDataUrl(config.getString("saveEventUrl"))
   val SaveEventTokenUrl = s"${SaveEventUrl.replaceAll("events", "")}event-triggers/$EventId/token"
   println("save event url: " + SaveEventUrl)

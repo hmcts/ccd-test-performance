@@ -1,0 +1,59 @@
+plugins {
+    id 'com.github.lkishalmi.gatling' version '3.0.2'
+}
+
+apply plugin: 'com.github.lkishalmi.gatling'
+
+group = 'uk.gov.hmcts.ccd'
+version = '0.0.1-SNAPSHOT'
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://dl.bintray.com/hmcts/hmcts-maven'
+    }
+}
+
+ext {
+    gatlingVersion = '3.1.1'
+    scalaVersion = '2.12.8'
+    springBootVersion = '2.1.4.RELEASE'
+    serviceAuthProviderVersion = '3.0.0'
+}
+
+dependencies {
+    testCompile group: 'org.scala-lang', name: 'scala-library', version: scalaVersion
+    testCompile group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: serviceAuthProviderVersion
+    testCompile group: 'io.gatling.highcharts', name: 'gatling-charts-highcharts', version: gatlingVersion
+    testCompile group: 'io.gatling', name: 'gatling-app', version: gatlingVersion
+
+    gatlingRuntime group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
+    gatlingRuntime group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: serviceAuthProviderVersion
+    gatlingRuntime group: 'io.gatling.highcharts', name: 'gatling-charts-highcharts', version: gatlingVersion
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'io.gatling.app.Gatling'
+    }
+    from {
+        configurations.testCompile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    from sourceSets.test.output
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+}
+
+gatling {
+    toolVersion = '3.0.2'
+    scalaVersion = scalaVersion
+    simulations = [
+            'uk.gov.hmcts.ccd.simulation.GetCasesSimulation',
+            'uk.gov.hmcts.ccd.simulation.CreateCasesSimulation',
+            'uk.gov.hmcts.ccd.simulation.GetUserProfileSimulation',
+            'uk.gov.hmcts.ccd.simulation.SaveEventSimulation',
+            'uk.gov.hmcts.ccd.simulation.SearchCasesSimulation'
+    ]
+}
