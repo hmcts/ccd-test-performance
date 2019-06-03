@@ -7,7 +7,7 @@ import uk.gov.hmcts.ccd.util.CcdTokenGenerator
 object SearchCasesAPIGateway {
 
   val url = "/aggregated/caseworkers/538/jurisdictions/TEST/case-types/Benefit/cases"
-  val userToken = CcdTokenGenerator.generateWebUserToken(url)
+  val userToken = CcdTokenGenerator.generateWebUserToken()
 
   def SearchCasesAPIGatewayhttp() = {
     http("get case data")

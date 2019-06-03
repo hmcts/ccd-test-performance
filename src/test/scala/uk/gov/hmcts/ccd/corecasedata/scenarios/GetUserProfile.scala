@@ -12,7 +12,7 @@ object GetUserProfile extends PerformanceTestsConfig {
 
   def call() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(endpointUrl)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
     //println("s2sToken:  " + s2sToken + " userToken " + userToken)
     //http("get user profile")
     http("TX05_CCD_GetUserProfileEndpoint_getuserprofile")

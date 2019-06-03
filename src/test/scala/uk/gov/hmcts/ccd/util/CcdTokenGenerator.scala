@@ -1,27 +1,83 @@
 package uk.gov.hmcts.ccd.util
 
-import org.springframework.http.HttpMethod
+import java.net.{URL, URLDecoder}
+import java.util
+import spray.json._
+import spray.json.DefaultJsonProtocol._
+
+import org.springframework.http.{HttpEntity, HttpHeaders, MediaType}
 import org.springframework.web.client.RestTemplate
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator
+import org.springframework.util.LinkedMultiValueMap
+import org.springframework.util.MultiValueMap
 
 object CcdTokenGenerator extends PerformanceTestsConfig with SpringApplicationContext {
 
-  val TOKEN_LEASE_URL = s"$UserAuthUrl/testing-support/lease"
+  val AUTHORISATION_CLIENT_ID = s"ccd_gateway"
+  val AUTH_CODE_URL = s"$UserAuthUrl/authorizationCode"
+  val AUTH_TOKEN_URL = s"$UserAuthUrl/oauth2/token?client_id=$AUTHORISATION_CLIENT_ID&client_secret=$OAuth2ClientSecret"
+  val restTemplate = new RestTemplate
 
   var dataStoreS2STokenGenerator = applicationContext.getBean("dataStoreS2STokenGenerator").asInstanceOf[AuthTokenGenerator]
   var gatewayS2STokenGenerator = applicationContext.getBean("gatewayS2STokenGenerator").asInstanceOf[AuthTokenGenerator]
 
-  def generateWebUserToken(url: String): String = generateUserToken(UserCcdId, roleFor(url))
+  def generateWebUserToken(): String = generateUserToken(UserCcdId, UserCcdPassword, RedirectUriForAuthToken)
 
-  def generateImportUserToken: String = generateUserToken(UserImportId, "ccd-import")
+  def generateImportUserToken: String = generateUserToken(UserImportId, UserImportPassword, RedirectUriForAuthToken)
 
-  protected def generateUserToken(id: Integer, role: String): String = {
-    val url = TOKEN_LEASE_URL + String.format("?id=%s&role=%s", id, role)
-    val restTemplate = new RestTemplate
-    val response = restTemplate.exchange(url, HttpMethod.POST, null, classOf[String])
-    val token = response.getBody
-    println(s"generated user token $token")
-    "Bearer " + token
+  private def generateUserToken(id: String, password: String, redirectUri: String): String = {
+    val authCode = generateUserAuthCode(id, password, redirectUri)
+    val token = generateUserAuthToken(authCode, redirectUri)
+
+    token
+  }
+
+  private def generateUserAuthCode(userId: String, password: String, redirectUri: String): String = {
+    // retrieve authorisation code for user name and password
+    val headers = new HttpHeaders
+    headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED)
+    headers.setAccept(util.Arrays.asList(MediaType.APPLICATION_JSON_UTF8))
+
+    val formParameters = new LinkedMultiValueMap[String, String]
+    formParameters.add("username", userId)
+    formParameters.add("password", password)
+    formParameters.add("client_id", AUTHORISATION_CLIENT_ID)
+    formParameters.add("redirect_uri", redirectUri)
+
+    val request = new HttpEntity[MultiValueMap[String, String]](formParameters, headers)
+
+    val response = restTemplate.postForEntity(AUTH_CODE_URL, request, classOf[String])
+
+    // extract authorisation code from the headers
+    val locationHeader = response.getHeaders.get("Location").toString.replaceAll("\\[", "").replaceAll("\\]", "")
+    val query = new URL(locationHeader).getQuery
+    val queryParameters = parseUrlParameters(query)
+
+    queryParameters.getOrElse("code", "")
+  }
+
+  private def generateUserAuthToken(authCode: String, redirectUri: String): String = {
+    // retrieve SIDAM authorisation code for user name and password
+    val headers = new HttpHeaders
+    headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED)
+    headers.setAccept(util.Arrays.asList(MediaType.APPLICATION_JSON_UTF8))
+
+    val formParameters = new LinkedMultiValueMap[String, String]
+    formParameters.add("code", authCode)
+    formParameters.add("grant_type", "authorization_code")
+    formParameters.add("redirect_uri", redirectUri)
+
+    val request = new HttpEntity[MultiValueMap[String, String]](formParameters, headers)
+
+    val response = restTemplate.postForEntity(AUTH_TOKEN_URL, request, classOf[String])
+
+    // extract access token from the response body
+    val responseProperties = response.getBody.parseJson.convertTo[Map[String, JsValue]]
+    val accessToken= responseProperties("access_token").convertTo[String]
+
+    println(s"accessToken: $accessToken")
+
+    accessToken.toString
   }
 
   def generateDataStoreS2SToken(): String = {
@@ -36,21 +92,11 @@ object CcdTokenGenerator extends PerformanceTestsConfig with SpringApplicationCo
     token
   }
 
-  private def roleFor(url: String) = {
-    /*val result = "caseworker,caseworker-divorce,caseworker-divorce-courtadmin,caseworker-divorce-financialremedy,caseworker-divorce-financialremedy-courtadmin,caseworker-probate,caseworker-probate-issuer,caseworker-probate-examiner,caseworker-probate-authoriser,caseworker-sscs,caseworker-cmc,caseworker-test,caseworker-test-manager,caseworker-test-junior,caseworker-test-senior,caseworker-test-public,caseworker-test-private,caseworker-test-protected,caseworker-reference-data,caseworker-publiclaw,caseworker-publiclaw-cafcass,caseworker-privatelaw,caseworker-privatelaw-courtadmin,caseworker-privatelaw-casecreator,caseworker-privatelaw-cafcass,caseworker,payments,caseworker-loa1,caseworker-divorce-loa1,caseworker-divorce-courtadmin-loa1,caseworker-divorce-financialremedy-loa1,caseworker-divorce-financialremedy-courtadmin-loa1,caseworker-probate-loa1,caseworker-probate-issuer-loa1,caseworker-probate-examiner-loa1,caseworker-probate-authoriser-loa1,caseworker-sscs-loa1,caseworker-cmc-loa1,caseworker-test-loa1,caseworker-test-manager-loa1,caseworker-test-junior-loa1,caseworker-test-senior-loa1,caseworker-test-public-loa1,caseworker-test-private-loa1,caseworker-test-protected-loa1,caseworker-reference-data-loa1,caseworker-publiclaw-loa1,caseworker-publiclaw-cafcass-loa1,caseworker-privatelaw-loa1,caseworker-privatelaw-courtadmin-loa1,caseworker-privatelaw-casecreator-loa1,caseworker-privatelaw-cafcass-loa1,caseworker-loa1,payments-loa1"
-    */
-    val result = "caseworker" + parseJurisdiction(url).map(j => s"-$j").getOrElse("")
-    println(s"role used for user token generation: $result")
-    result
-  }
-
-  private def parseJurisdiction(url: String) = {
-    if (!url.contains("jurisdictions")) {
-      None
-    } else {
-      val jurisdiction = url.split("jurisdictions/")(1).split("/")(0)
-      Some(jurisdiction.toLowerCase)
-    }
+  private def parseUrlParameters(url: String) = {
+    url.split("&").map(v => {
+      val m = v.split("=", 2).map(s => URLDecoder.decode(s, "UTF-8"))
+      m(0) -> m(1)
+    }).toMap
   }
 
 }
