@@ -1,10 +1,11 @@
 package uk.gov.hmcts.ccd.util
 
-import java.net.{URL, URLDecoder}
-import java.util
+import java.net.URLDecoder
+
+import scala.collection.JavaConversions._
+import io.lemonlabs.uri.Url
 import spray.json._
 import spray.json.DefaultJsonProtocol._
-
 import org.springframework.http.{HttpEntity, HttpHeaders, MediaType}
 import org.springframework.web.client.RestTemplate
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator
@@ -13,7 +14,7 @@ import org.springframework.util.MultiValueMap
 
 object CcdTokenGenerator extends PerformanceTestsConfig with SpringApplicationContext {
 
-  val AUTHORISATION_CLIENT_ID = s"ccd_gateway"
+  val AUTHORISATION_CLIENT_ID = "ccd_gateway"
   val AUTH_CODE_URL = s"$UserAuthUrl/authorizationCode"
   val AUTH_TOKEN_URL = s"$UserAuthUrl/oauth2/token?client_id=$AUTHORISATION_CLIENT_ID&client_secret=$OAuth2ClientSecret"
   val restTemplate = new RestTemplate
@@ -36,7 +37,7 @@ object CcdTokenGenerator extends PerformanceTestsConfig with SpringApplicationCo
     // retrieve authorisation code for user name and password
     val headers = new HttpHeaders
     headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED)
-    headers.setAccept(util.Arrays.asList(MediaType.APPLICATION_JSON_UTF8))
+    headers.setAccept(List(MediaType.APPLICATION_JSON_UTF8))
 
     val formParameters = new LinkedMultiValueMap[String, String]
     formParameters.add("username", userId)
@@ -50,17 +51,16 @@ object CcdTokenGenerator extends PerformanceTestsConfig with SpringApplicationCo
 
     // extract authorisation code from the headers
     val locationHeader = response.getHeaders.get("Location").toString.replaceAll("\\[", "").replaceAll("\\]", "")
-    val query = new URL(locationHeader).getQuery
-    val queryParameters = parseUrlParameters(query)
+    val queryParameters = Url.parse(locationHeader).query.param("code")
 
-    queryParameters.getOrElse("code", "")
+    queryParameters.getOrElse("")
   }
 
   private def generateUserAuthToken(authCode: String, redirectUri: String): String = {
     // retrieve SIDAM authorisation code for user name and password
     val headers = new HttpHeaders
     headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED)
-    headers.setAccept(util.Arrays.asList(MediaType.APPLICATION_JSON_UTF8))
+    headers.setAccept(List(MediaType.APPLICATION_JSON_UTF8))
 
     val formParameters = new LinkedMultiValueMap[String, String]
     formParameters.add("code", authCode)
@@ -90,13 +90,6 @@ object CcdTokenGenerator extends PerformanceTestsConfig with SpringApplicationCo
     val token = gatewayS2STokenGenerator.generate()
     println(s"generated s2s gateway token: $token")
     token
-  }
-
-  private def parseUrlParameters(url: String) = {
-    url.split("&").map(v => {
-      val m = v.split("=", 2).map(s => URLDecoder.decode(s, "UTF-8"))
-      m(0) -> m(1)
-    }).toMap
   }
 
 }

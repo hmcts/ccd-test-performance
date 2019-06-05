@@ -27,6 +27,7 @@ ext {
 dependencies {
     testCompile group: 'org.scala-lang', name: 'scala-library', version: scalaVersion
     testCompile group: 'io.spray', name: 'spray-json_2.12', version: '1.3.5'
+    testCompile group: 'io.lemonlabs', name: 'scala-uri_2.12', version: '1.4.5'
     testCompile group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: serviceAuthProviderVersion
     testCompile group: 'io.gatling.highcharts', name: 'gatling-charts-highcharts', version: gatlingVersion
     testCompile group: 'io.gatling', name: 'gatling-app', version: gatlingVersion
@@ -35,6 +36,7 @@ dependencies {
     gatlingRuntime group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: serviceAuthProviderVersion
     gatlingRuntime group: 'io.gatling.highcharts', name: 'gatling-charts-highcharts', version: gatlingVersion
     gatlingRuntime group: 'io.spray', name: 'spray-json_2.12', version: '1.3.5'
+    gatlingRuntime group: 'io.lemonlabs', name: 'scala-uri_2.12', version: '1.4.5'
 }
 
 jar {
