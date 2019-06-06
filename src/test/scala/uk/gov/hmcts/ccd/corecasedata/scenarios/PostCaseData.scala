@@ -7,8 +7,8 @@ import scala.concurrent.duration._
 
 object PostCaseData extends PerformanceTestsConfig {
 
- // val EventId = "applyForGrant"
-  val EventId = "CREATE"
+  // val EventId = "applyForGrant"
+  val EventId = "appealCreated"
   val CreateCaseUrl = caseDataUrl(config.getString("createCaseUrl"))
   val CreateCaseTokenUrl = s"${CreateCaseUrl.replaceAll("cases", "")}event-triggers/$EventId/token"
   println("create case url: " + CreateCaseUrl)
@@ -16,109 +16,161 @@ object PostCaseData extends PerformanceTestsConfig {
 
   val EventBody = StringBody(s"""
                            {
-                             "event": {
-                                 "description": "case automatically created by performance test",
-                                 "id": "${EventId}",
-                                 "summary": "Performance testing"
-                             },
-                             "event_token": """"  + "${eventToken}" +   """",
-                             "data": {
-                               "willDate": "2013-01-01",
-                               "amountPaid": "120000",
-                               "willExists": "Yes",
-                               "declaration": "Declaration text does here and it is long and long that means it goes on ffor a very long time and then im going to cop and paste a few times to make it long. Hope ok with youDeclaration text does here and it is long and long that means it goes on ffor a very long time and then im going to cop and paste a few times to make it long. Hope ok with youDeclaration text does here and it is long and long that means it goes on ffor a very long time and then im going to cop and paste a few times to make it long. Hope ok with youDeclaration text does here and it is long and long that means it goes on ffor a very long time and then im going to cop and paste a few times to make it long. Hope ok with you",
-                               "ihtNetValue": "120000",
-                               "ihtGrossValue": "120000",
-                               "legalStatement": "Legal Statement is just as long and again I am going to copy and paste a number time so I dont have ti type  too much.   Legal Statement is just as long and again I am going to copy and paste a number time so I dont have ti type  too much.   Legal Statement is just as long and again I am going to copy and paste a number time so I dont have ti type  too much.   Legal Statement is just as long and again I am going to copy and paste a number time so I dont have ti type  too much.   Legal Statement is just as long and again I am going to copy and paste a number time so I dont have ti type  too much.   Legal Statement is just as long and again I am going to copy and paste a number time so I dont have ti type  too much.   Legal Statement is just as long and again I am going to copy and paste a number time so I dont have ti type  too much.   Legal Statement is just as long and again I am going to copy and paste a number time so I dont have ti type  too much.   Legal Statement is just as long and again I am going to copy and paste a number time so I dont have ti type  too much.   Legal Statement is just as long and again I am going to copy and paste a number time so I dont have ti type  too much.",
-                               "deceasedAddress": "5 Death Road\nFake Town",
-                               "deceasedSurname": "Plummer",
-                               "willHasCodicils": "No",
-                               "willIsAnOriginal": "Yes",
-                                 "deceasedForenames": "Bella",
-                               "numberOfExecutors": "3",
-                               "extraCopiesOfGrant": "0",
-                               "ihtReferenceNumber": "250",
-                               "numberOfApplicants": "0",
-                               "deceasedDateOfBirth": "1970-01-01",
-                               "deceasedDateOfDeath": "2018-02-02",
-                               "executorsNotApplying": [
-                                 {
-                                   "id": "ef68c99a-ea40-4000-af62-974081f2cd02",
-                                   "value": {
-                                     "notApplyingExecutorName": "Mr Other Exec Plummer",
-                                     "notApplyingExecutorReason": "DiedBefore",
-                                     "notApplyingExecutorNotified": "No",
-                                     "notApplyingExecutorNameOnWill": "Mr Other Exec Plummer",
-                                     "notApplyingExecutorNameDifferenceComment": "None"
-                                   }
-                                 },
-                                 {
-                                   "id": "35110c98-7fcf-4d4c-8c57-b8810407443d",
-                                   "value": {
-                                     "notApplyingExecutorName": "Mr Third Exec Plummer",
-                                     "notApplyingExecutorReason": "DiedAfter",
-                                     "notApplyingExecutorNotified": "Yes",
-                                     "notApplyingExecutorNameOnWill": "Mr Third Exec Plummer",
-                                     "notApplyingExecutorNameDifferenceComment": "None"
-                                   }
-                                 }
-                               ],
-                               "outsideUKGrantCopies": "0",
-                               "willNumberOfCodicils": "1",
-                               "deceasedAliasNameList": [
-                                 {
-                                   "id": "8c46923a-8b1a-407d-aae1-ee85c297d0ca",
-                                   "value": {
-                                     "LastName": "Plummer",
-                                     "Forenames": "Alias Bella",
-                                     "AppearOnGrant": "Yes"
-                                   }
-                                 },
-                                 {
-                                   "id": "282c0413-4247-4f30-840c-06fc44a261ed",
-                                   "value": {
-                                     "LastName": "Plummer",
-                                     "Forenames": "B",
-                                     "AppearOnGrant": "No"
-                                   }
-                                 }
-                               ],
-                               "willLatestCodicilDate": "2016-01-01",
-                               "ihtFormCompletedOnline": "Yes",
-                               "paymentReferenceNumber": "PaymentRef1111111",
-                               "primaryApplicantAddress": "5 Fake road,\nFake Town",
-                               "primaryApplicantSurname": "Plummer",
-                               "willLatestCodicilHasDate": "No",
-                               "primaryApplicantForenames": "Rex",
-                               "deceasedDomicileInEngWales": "",
-                               "primaryApplicantIsExecutor": "Yes",
-                               "primaryApplicantPhoneNumber": "080909090909",
-                               "primaryApplicantEmailAddress": "fake@gmail.com"
-                             }
-                           }
-                         """)
+                                "event": {
+                                    "description": "case automatically created by performance test",
+                                    "id": "${EventId}",
+                                    "summary": "Performance testing"
+                                },
+                                "event_token": """" + "${eventToken}" + """",
+                                "data": {
+                                	"appeal": {
+                                		"receivedVia": "Online",
+                                		"mrnDetails": {
+                                			"dwpIssuingOffice": "DWP101010",
+                                			"mrnDate": "2010-12-10",
+                                			"mrnLateReason": "Not known",
+                                			"mrnMissingReason": "No Reason"
+                                		},
+                                		"appellant": {
+                                			"name": {
+                                				"title": "Mr",
+                                				"firstName": "Jooles",
+                                				"middleName": "Rodriguez",
+                                				"lastName": "Fernandez"
+                                			},
+                                			"identity": {
+                                				"dob": "2011-11-11",
+                                				"nino": "SGD83241"
+                                			},
+                                			"address": {
+                                				"line1": "14 Avenue Road",
+                                				"line2": "Revenue Lane",
+                                				"line3": null,
+                                				"town": "Chiswick",
+                                				"county": "Middlesex",
+                                				"postcode": "W4 5XR",
+                                				"country": "UK"
+                                			},
+                                			"contact": {
+                                				"phone": "7788990022",
+                                				"mobile": "8899008899",
+                                				"email": "noreason@everyreason.com"
+                                			},
+                                			"isAppointee": "Yes",
+                                			"appointee": {
+                                				"name": {
+                                					"title": "Mrs",
+                                					"firstName": "Davis",
+                                					"middleName": "Novis",
+                                					"lastName": "Data"
+                                				},
+                                				"identity": {
+                                					"dob": "1990-01-01",
+                                					"nino": "SH656437"
+                                				},
+                                				"address": {
+                                					"line1": "14 Avenue Road",
+                                					"line2": "Revenue Lane",
+                                					"line3": null,
+                                					"town": "Chiswick",
+                                					"county": "Middlesex",
+                                					"postcode": "W4 5XR",
+                                					"country": "UK"
+                                				},
+                                				"contact": {
+                                					"phone": "0909090909",
+                                					"mobile": "0808080808",
+                                					"email": "revenue@jas.com"
+                                				}
+                                			},
+                                			"isAddressSameAsAppointee": "Yes"
+                                		},
+                                		"benefitType": {
+                                			"code": "B0120202",
+                                			"description": "Benefit"
+                                		},
+                                		"hearingType": "domiciliary",
+                                		"hearingOptions": {
+                                			"wantsToAttend": "Yes",
+                                			"wantsSupport": "Yes",
+                                			"languageInterpreter": "No",
+                                			"arrangements": [
+                                				"signLanguageInterpreter"
+                                			],
+                                			"scheduleHearing": "No",
+                                			"other": "Other information",
+                                			"signLanguageType": "wer"
+                                		},
+                                		"appealReasons": {
+                                			"reasons": [],
+                                			"otherReasons": null
+                                		},
+                                		"supporter": {
+                                			"name": {
+                                				"title": "Mr",
+                                				"firstName": "Data",
+                                				"middleName": "less",
+                                				"lastName": "last name"
+                                			},
+                                			"contact": {
+                                				"phone": "0909090909",
+                                				"mobile": "070707070707",
+                                				"email": "house@revenue.com"
+                                			}
+                                		},
+                                		"rep": {
+                                			"hasRepresentative": "No"
+                                		},
+                                		"signer": null
+                                	},
+                                	"regionalProcessingCenter": {
+                                		"name": null,
+                                		"address1": "14 Avenue Road",
+                                		"address2": "Revenue Road",
+                                		"address3": null,
+                                		"address4": null,
+                                		"postcode": "W4 5XR",
+                                		"city": "Chiswick",
+                                		"phoneNumber": "0902340982",
+                                		"faxNumber": "203480284"
+                                	},
+                                	"panel": {
+                                		"assignedTo": "Mr Judge",
+                                		"medicalMember": "Medico",
+                                		"disabilityQualifiedMember": "none"
+                                	},
+                                	"caseReference": "100000000",
+                                	"caseCreated": "2010-11-10",
+                                	"region": "London",
+                                	"generatedNino": "S123456789",
+                                	"generatedSurname": "Bakerloo",
+                                	"generatedEmail": "bakerrloo@bakerloo.com",
+                                	"generatedMobile": "0909090909",
+                                	"generatedDOB": "1990-10-10",
+                                	"evidencePresent": "Yes"
+                                }
+                         }""")
 
 
   def createCaseDatahttp() = {
     val token = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(CreateCaseUrl)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
     exec(
-         //http("get create case event token")
-           http("TX02_CCD_CreateCaseEndpoint_createcase_eventtoken")
-           .get(CreateCaseTokenUrl)
-           .header("ServiceAuthorization", token)
-           .header("Authorization", userToken)
-           .header("Content-Type","application/json")
-           .check(status.is(200),jsonPath("$.token").saveAs("eventToken"))
-      ).exec(
-        //http("create case data")
-        http("TX02_CCD_CreateCaseEndpoint_createcasedata")
-        .post(CreateCaseUrl)
-        .body(
-          EventBody).asJSON
+      //http("get create case event token")
+      http("TX02_CCD_CreateCaseEndpoint_createcase_eventtoken")
+        .get(CreateCaseTokenUrl)
         .header("ServiceAuthorization", token)
         .header("Authorization", userToken)
-        .header("Content-Type","application/json")
+        .header("Content-Type", "application/json")
+        .check(status.is(200), jsonPath("$.token").saveAs("eventToken"))
+    ).exec(
+      //http("create case data")
+      http("TX02_CCD_CreateCaseEndpoint_createcasedata")
+        .post(CreateCaseUrl)
+        .body(EventBody).asJson
+        .header("ServiceAuthorization", token)
+        .header("Authorization", userToken)
+        .header("Content-Type", "application/json")
         .check(status is 201)
     )
   }
@@ -126,10 +178,10 @@ object PostCaseData extends PerformanceTestsConfig {
 
   println("PostCaseData: Minimum think time " + MinThinkTime + " Maximum think time " + MaxThinkTime)
 
-  val   createCaseData = scenario("Create Case Data").during(TotalRunDuration minutes) {
-      exec(
-          createCaseDatahttp()
-      )
+  val createCaseData = scenario("Create Case Data").during(TotalRunDuration minutes) {
+    exec(
+      createCaseDatahttp()
+    )
       .pause(MinThinkTime seconds, MaxThinkTime seconds)
   }
 

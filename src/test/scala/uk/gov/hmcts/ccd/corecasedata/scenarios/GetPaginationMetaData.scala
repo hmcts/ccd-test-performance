@@ -3,6 +3,7 @@ package uk.gov.hmcts.ccd.corecasedata.scenarios
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import uk.gov.hmcts.ccd.util.{CcdTokenGenerator, PerformanceTestsConfig}
+import scala.concurrent.duration._
 
 object GetPaginationMetaData extends PerformanceTestsConfig {
 
@@ -11,8 +12,8 @@ object GetPaginationMetaData extends PerformanceTestsConfig {
 
   def httpRequest() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(url)
-    http("get pagination metadata data")
+    val userToken = CcdTokenGenerator.generateWebUserToken()
+    http("TX06_CCD_GetPaginationMetadataData")
       .get(url)
       .header("ServiceAuthorization", s2sToken)
       .header("Authorization", userToken)
@@ -20,6 +21,9 @@ object GetPaginationMetaData extends PerformanceTestsConfig {
       .check(status in  (200))
   }
 
-  val getPaginationMetaData = scenario("Get Pagination Metadata")
-    .exec(httpRequest())
+  println("GetCaseData: Minimum think time " + MinThinkTime + " Maximum think time " + MaxThinkTime)
+
+  val getPaginationMetaData = scenario("Get Pagination Metadata").during(TotalRunDuration minutes) {
+    exec(httpRequest())
+  }
 }

@@ -14,7 +14,7 @@ abstract class CCDSimulation extends Simulation with PerformanceTestsConfig {
 
   val baseHttpUrl: String
 
-  val httpConf = http.baseURL(baseHttpUrl).headers(Headers.commonHeaders)
+  val httpConf = http.baseUrl(baseHttpUrl).headers(Headers.commonHeaders)
 
   def getProxiedHttpConf(): Option[HttpProtocolBuilder] = {
     val proxyHostOptional = config.getOptionalString("httpProxyHost")
@@ -32,12 +32,12 @@ abstract class CCDSimulation extends Simulation with PerformanceTestsConfig {
 
   def setup() = setUp(scenarios())
     .protocols(getHttpConf())
-    .throttle(
+   /* .throttle(
       reachRps(ReachRPSTarget) in (ReachRPSDuration minutes),
       holdFor(ReachRPSHoldForDuration minutes),
       jumpToRps(JumptoRPSTarget),
       holdFor(JumptoRPSDuration minutes)
-    )
+    )*/
     .assertions(
       global.responseTime.mean.lt(config.getInt("meanResponseTime"))
 

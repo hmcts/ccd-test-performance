@@ -13,7 +13,7 @@ object GetUserProfile extends PerformanceTestsConfig {
     http("get a user profile")
       .get(url)
       .header("ServiceAuthorization", token)
-      .header("Authorization", CcdTokenGenerator.generateWebUserToken(url))
+      .header("Authorization", CcdTokenGenerator.generateWebUserToken())
       .check(status is 200)
   }
 

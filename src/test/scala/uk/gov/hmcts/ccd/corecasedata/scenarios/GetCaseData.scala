@@ -12,13 +12,14 @@ object GetCaseData extends PerformanceTestsConfig {
 
   def getCaseDataHttp() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(getCaseUrl)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
     //http("get case data")
     http("TX01_CCD_GetCaseDataEndpoint_getcasedata")
       .get(_ => url())
       .header("ServiceAuthorization", s2sToken)
       .header("Authorization", userToken)
-      .header("Content-Type","application/json")
+      .header("Accept","application/vnd.uk.gov.hmcts.ccd-data-store-api.ui-case-view.v2+json")
+      .header("Experimental","true")
       .check(status in  (200))
   }
 

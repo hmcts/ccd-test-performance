@@ -15,25 +15,25 @@
     
 - Depending on the specific environment, open required ssh tunnels (Idam, Bastion host...)
     
-- To run all the performance tests:
+- To run all the simulations:
     
     ```
-    mvn clean gatling:test
+    gradle clean gatlingRun
     ```
     
 - To run a specific simulation
     ```
-    mvn clean gatling:test -Dgatling.simulationClass={simulation_class_name}
+    gradle clean gatlingRun-{simulation_class_name}
     ```
     e.g: 
     ```
-    mvn clean gatling:test -Dgatling.simulationClass=uk.gov.hmcts.ccd.simulation.CreateCasesSimulation
+    gradle clean gatlingRun-uk.gov.hmcts.ccd.simulation.CreateCasesSimulation
     ```
 
 - To create a fat jar with all dependencies 
 
     ```
-    mvn package
+    gradle clean jar
     ```
     
     then set the environment and run the simulation with: 
@@ -50,3 +50,7 @@
 ## LICENSE
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
+
+
+##### Note
+For more information on the gradle gatling plugin please visit https://github.com/lkishalmi/gradle-gatling-plugin

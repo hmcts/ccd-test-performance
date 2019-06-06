@@ -8,7 +8,7 @@ import scala.concurrent.duration._
 object PostEvent extends PerformanceTestsConfig {
 
  // val EventId = "updateContactDetails"
-  val EventId = "UPDATE"
+  val EventId = "eventsUpdates"
   val SaveEventUrl = caseDataUrl(config.getString("saveEventUrl"))
   val SaveEventTokenUrl = s"${SaveEventUrl.replaceAll("events", "")}event-triggers/$EventId/token"
   println("save event url: " + SaveEventUrl)
@@ -29,7 +29,7 @@ object PostEvent extends PerformanceTestsConfig {
 
   def saveEventDataHttp() = {
     val token = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(SaveEventUrl)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
     exec(
          //http("save event token")
            http("TX04_CCD_SaveEventEndpoint_saveeventtoken")
@@ -43,7 +43,7 @@ object PostEvent extends PerformanceTestsConfig {
          http("TX04_CCD_SaveEventEndpoint")
         .post(SaveEventUrl)
         .body(
-          EventBody).asJSON
+          EventBody).asJson
         .header("ServiceAuthorization", token)
         .header("Authorization", userToken)
         .header("Content-Type","application/json")
