@@ -1,7 +1,5 @@
 package uk.gov.hmcts.ccd.util
 
-import java.net.URLDecoder
-
 import scala.collection.JavaConversions._
 import io.lemonlabs.uri.Url
 import spray.json._
@@ -14,9 +12,8 @@ import org.springframework.util.MultiValueMap
 
 object CcdTokenGenerator extends PerformanceTestsConfig with SpringApplicationContext {
 
-  val AUTHORISATION_CLIENT_ID = "ccd_gateway"
   val AUTH_CODE_URL = s"$UserAuthUrl/authorizationCode"
-  val AUTH_TOKEN_URL = s"$UserAuthUrl/oauth2/token?client_id=$AUTHORISATION_CLIENT_ID&client_secret=$OAuth2ClientSecret"
+  val AUTH_TOKEN_URL = s"$UserAuthUrl/oauth2/token?client_id=$AuthClientId&client_secret=$OAuth2ClientSecret"
   val restTemplate = new RestTemplate
 
   var dataStoreS2STokenGenerator = applicationContext.getBean("dataStoreS2STokenGenerator").asInstanceOf[AuthTokenGenerator]
@@ -42,7 +39,7 @@ object CcdTokenGenerator extends PerformanceTestsConfig with SpringApplicationCo
     val formParameters = new LinkedMultiValueMap[String, String]
     formParameters.add("username", userId)
     formParameters.add("password", password)
-    formParameters.add("client_id", AUTHORISATION_CLIENT_ID)
+    formParameters.add("client_id", AuthClientId)
     formParameters.add("redirect_uri", redirectUri)
 
     val request = new HttpEntity[MultiValueMap[String, String]](formParameters, headers)
