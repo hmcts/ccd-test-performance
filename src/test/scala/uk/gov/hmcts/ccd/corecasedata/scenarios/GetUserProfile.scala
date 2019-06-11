@@ -11,8 +11,10 @@ object GetUserProfile extends PerformanceTestsConfig {
   println("endpoint url: " + endpointUrl)
 
   def call() = {
+
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(endpointUrl)
+    //val userToken = CcdTokenGenerator.generateWebUserToken(endpointUrl)
+    val userToken = CcdTokenGenerator.generateSIDAMUserToken()
     println("s2sToken:  " + s2sToken + " userToken " + userToken)
     //http("get user profile")
     http("TX05_CCD_GetUserProfileEndpoint_getuserprofile")
@@ -20,6 +22,7 @@ object GetUserProfile extends PerformanceTestsConfig {
       .header("ServiceAuthorization", s2sToken)
       .header("Authorization", userToken)
       .header("Content-Type","application/json")
+      .header("Accept"," application/vnd.uk.gov.hmcts.ccd-data-store-api.ui-case-view.v2+json")
       .check(status in  (200))
   }
 

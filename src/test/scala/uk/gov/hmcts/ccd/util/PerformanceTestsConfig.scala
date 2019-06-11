@@ -8,9 +8,10 @@ trait PerformanceTestsConfig {
 
   val config = PerformanceTestsConfig.config
 
-  val UserCcdId = config.getInt("userCcdId")
-  val UserImportId = config.getInt("userImportId")
+  val UserCcdId = config.getString("userCcdId")
+  val UserImportId = config.getString("userImportId")
   val UserAuthUrl = config.getString("idamUserTokenUrl")
+  val CcdCaseMgmtUrl = config.getString("ccdCaseMgmtUrl")
   val S2SAuthUrl = config.getString("idamS2SUrl")
   val UserProfileUrl = config.getString("userProfileUrl")
   val CaseDataUrl = config.getString("caseDataUrl")

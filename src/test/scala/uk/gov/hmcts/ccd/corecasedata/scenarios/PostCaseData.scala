@@ -81,7 +81,8 @@ object PostCaseData extends PerformanceTestsConfig {
 
 
   val token = CcdTokenGenerator.generateGatewayS2SToken()
-  val userToken = CcdTokenGenerator.generateWebUserToken(CreateCaseUrl)
+  val userToken = CcdTokenGenerator.generateSIDAMUserToken()
+  //val userToken = CcdTokenGenerator.generateWebUserToken(CreateCaseUrl)
 
 
  /* def createCaseDatahttp() = {

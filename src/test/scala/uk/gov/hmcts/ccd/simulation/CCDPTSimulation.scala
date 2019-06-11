@@ -15,10 +15,16 @@ class CCDPTSimulation extends CCDSimulation {
 
 
   val scenarios = List(
-   //CreateCMCCaseData.CreateCMCCaseDataSCN.inject(rampUsers(100) over(5 minutes)),
-   //CreateSSCSCaseData.CreateSSCSCaseDataSCN.inject(rampUsers(1) over(1 minutes)),
-  CreateDIVCaseData.CreateDIVCaseDataSCN.inject(rampUsers(1) over(1 minutes))
-   //ProdSSCSSearchWorkBasketIssue.ProdSSCSSearchWorkBasketIssueSCN.inject(rampUsers(300) over(5 minutes))
+    //CreateEthosCaseData.CreateEthosCaseDataSCN.inject(rampUsers(1) over(5 minutes))
+   //CreateIACaseData.CreateIACaseDataSCN.inject(rampUsers(1) over(5 minutes)),
+   //CreateProbateGrantCaseData.CreateProbateGrantCaseDataSCN.inject(rampUsers(1) over(5 minutes)),
+    //CreateEthosCaseData.CreateEthosCaseDataSCN.inject(rampUsers(1) over(5 minutes)),
+   //CreateCMCCaseData.CreateCMCCaseDataSCN.inject(rampUsers(1) over(5 minutes)),
+    //CreateSSCSCaseData.CreateSSCSCaseDataSCN.inject(rampUsers(1) over(1 minutes)),
+    CreateDIVCaseData.CreateDIVCaseDataSCN.inject(rampUsers(1) over(1 minutes)),
+    //CreateFPLCaseData.CreateFPLCaseDataSCN.inject(rampUsers(1) over(5 minutes))
+    //CreateProbateGrantMECaseData.CreateProbateGrantMECaseDataSCN.inject(rampUsers(1) over(5 minutes)),
+   // CreateProbateCaveatCaseData.CreateProbateCaveatCaseDataSCN.inject(rampUsers(1) over(1 minutes))
   )
 
 

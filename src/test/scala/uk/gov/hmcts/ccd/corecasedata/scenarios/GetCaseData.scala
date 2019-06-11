@@ -12,7 +12,8 @@ object GetCaseData extends PerformanceTestsConfig {
 
   def getCaseDataHttp() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(getCaseUrl)
+    val userToken = CcdTokenGenerator.generateSIDAMUserToken()
+    //val userToken = CcdTokenGenerator.generateWebUserToken(getCaseUrl)
     //http("get case data")
     http("TX01_CCD_GetCaseDataEndpoint_getcasedata")
       .get(_ => url())
