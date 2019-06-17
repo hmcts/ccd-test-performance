@@ -12,7 +12,7 @@ object GetPaginationMetaData extends PerformanceTestsConfig {
 
   def httpRequest() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(url)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
     http("TX06_CCD_GetPaginationMetadataData")
       .get(url)
       .header("ServiceAuthorization", s2sToken)

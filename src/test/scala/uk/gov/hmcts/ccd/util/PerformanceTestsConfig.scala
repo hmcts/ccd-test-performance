@@ -9,10 +9,15 @@ trait PerformanceTestsConfig {
   val config = PerformanceTestsConfig.config
 
   val UserCcdId = config.getString("userCcdId")
+  val UserCcdPassword = config.getString("userCcdPassword")
   val UserImportId = config.getString("userImportId")
+  val UserImportPassword = config.getString("userImportPassword")
   val UserAuthUrl = config.getString("idamUserTokenUrl")
   val CcdCaseMgmtUrl = config.getString("ccdCaseMgmtUrl")
+  val AuthClientId = config.getString("authClientId")
+  val RedirectUriForAuthToken = config.getString("redirectUriForAuthToken")
   val S2SAuthUrl = config.getString("idamS2SUrl")
+  val OAuth2ClientSecret = config.getString("oAuth2clientSecret")
   val UserProfileUrl = config.getString("userProfileUrl")
   val CaseDataUrl = config.getString("caseDataUrl")
   val CaseDefinitionUrl = config.getString("caseDefinitionUrl")

@@ -12,7 +12,7 @@ object SearchCases extends PerformanceTestsConfig {
 
   def httpRequest() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(url)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
     //http("search cases")
     http("TX03_CCD_SearchCaseEndpoint_searchcases")
       .get(url)
