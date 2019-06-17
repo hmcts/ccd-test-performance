@@ -103,7 +103,7 @@ object CreateFRCaseData extends PerformanceTestsConfig {
 
 
   val token = CcdTokenGenerator.generateGatewayS2SToken()
-  val userToken = CcdTokenGenerator.generateSIDAMUserToken()
+  val userToken = CcdTokenGenerator.generateWebUserToken()
 
 
   val   CreateFRCaseDataSCN = scenario("Create Financial remedy Case Data").during(TotalRunDuration minutes) {

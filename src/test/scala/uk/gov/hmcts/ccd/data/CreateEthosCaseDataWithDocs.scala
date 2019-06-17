@@ -102,7 +102,7 @@ object CreateEthosCaseDataWithDocs extends PerformanceTestsConfig {
 
 
   val createToken = CcdTokenGenerator.generateGatewayS2SToken()
-  val createUserToken = CcdTokenGenerator.generateSIDAMUserToken()
+  val createUserToken = CcdTokenGenerator.generateWebUserToken()
 
   val   CreateEthosCaseDataSCN = scenario("Create ETHOS Case Data").during(TotalRunDuration minutes) {
     exec(

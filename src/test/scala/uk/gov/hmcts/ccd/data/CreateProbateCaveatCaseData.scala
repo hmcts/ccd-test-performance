@@ -100,7 +100,7 @@ object CreateProbateCaveatCaseData extends PerformanceTestsConfig {
 
 
   val token = CcdTokenGenerator.generateGatewayS2SToken()
-  val userToken = CcdTokenGenerator.generateSIDAMUserToken()
+  val userToken = CcdTokenGenerator.generateWebUserToken()
 
 
   val   CreateProbateCaveatCaseDataSCN = scenario("Create Probate Caveat Application Case Data").during(TotalRunDuration minutes) {

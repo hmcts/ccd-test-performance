@@ -1,7 +1,7 @@
 package uk.gov.hmcts.ccd.data
 
 import io.gatling.core.Predef._
-import io.gatling.core.feeder.RecordSeqFeederBuilder
+import io.gatling.core.feeder.*
 import io.gatling.http.Predef._
 import uk.gov.hmcts.ccd.util.{CcdTokenGenerator, PerformanceTestsConfig}
 
@@ -83,7 +83,7 @@ object CreateCMCCaseData extends PerformanceTestsConfig {
   }
 
   val token = CcdTokenGenerator.generateGatewayS2SToken()
-  val userToken = CcdTokenGenerator.generateSIDAMUserToken()
+  val userToken = CcdTokenGenerator.generateWebUserToken()
 
   println("create case url: " + CreateCaseUrl)
 

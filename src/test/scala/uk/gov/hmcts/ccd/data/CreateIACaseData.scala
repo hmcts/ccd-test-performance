@@ -88,7 +88,7 @@ object CreateIACaseData extends PerformanceTestsConfig {
 
 
   val token = CcdTokenGenerator.generateGatewayS2SToken()
-  val userToken = CcdTokenGenerator.generateSIDAMUserToken()
+  val userToken = CcdTokenGenerator.generateWebUserToken()
 
 
   val   CreateIACaseDataSCN = scenario("Create IA Case Data").during(TotalRunDuration minutes) {

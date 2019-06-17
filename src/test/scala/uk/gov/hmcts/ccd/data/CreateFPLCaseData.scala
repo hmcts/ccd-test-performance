@@ -96,7 +96,7 @@ object CreateFPLCaseData extends PerformanceTestsConfig {
 
 
   val token = CcdTokenGenerator.generateGatewayS2SToken()
-  val userToken = CcdTokenGenerator.generateSIDAMUserToken()
+  val userToken = CcdTokenGenerator.generateWebUserToken()
 
 
   val   CreateFPLCaseDataSCN = scenario("Create FPL Case Data").during(TotalRunDuration minutes) {

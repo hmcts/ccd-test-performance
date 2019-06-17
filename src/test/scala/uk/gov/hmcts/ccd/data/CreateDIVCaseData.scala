@@ -93,7 +93,7 @@ object CreateDIVCaseData extends PerformanceTestsConfig {
 
 
   val token = CcdTokenGenerator.generateGatewayS2SToken()
-  val userToken = CcdTokenGenerator.generateSIDAMUserToken()
+  val userToken = CcdTokenGenerator.generateWebUserToken()
 
 
   val   CreateDIVCaseDataSCN = scenario("Create DIV Case Data").during(TotalRunDuration minutes) {

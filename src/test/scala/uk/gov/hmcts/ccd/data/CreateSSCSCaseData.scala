@@ -89,7 +89,7 @@ object CreateSSCSCaseData extends PerformanceTestsConfig {
 
 
   val token = CcdTokenGenerator.generateGatewayS2SToken()
-  val userToken = CcdTokenGenerator.generateSIDAMUserToken()
+  val userToken = CcdTokenGenerator.generateWebUserToken()
 
 
   val   CreateSSCSCaseDataSCN = scenario("Create SSCS Case Data").during(TotalRunDuration minutes) {

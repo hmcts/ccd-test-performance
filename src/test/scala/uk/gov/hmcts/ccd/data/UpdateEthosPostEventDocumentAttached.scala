@@ -28,7 +28,7 @@ object UpdateEthosPostEventDocumentAttached extends PerformanceTestsConfig {
   def saveEventDataHttp() = {
 
     val token = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateSIDAMUserToken()
+    val userToken = CcdTokenGenerator.generateWebUserToken()
     //val userToken = CcdTokenGenerator.generateWebUserToken(SaveEventUrl)
       feed(fileProviderRand)
       .exec(

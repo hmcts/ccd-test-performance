@@ -95,7 +95,7 @@ object CreateProbateGrantMECaseData extends PerformanceTestsConfig {
 
 
   val token = CcdTokenGenerator.generateGatewayS2SToken()
-  val userToken = CcdTokenGenerator.generateSIDAMUserToken()
+  val userToken = CcdTokenGenerator.generateWebUserToken()
 
   val   CreateProbateGrantMECaseDataSCN = scenario("Create Probate Grant Application Multi Exe Case Data").during(TotalRunDuration minutes) {
     exec(
