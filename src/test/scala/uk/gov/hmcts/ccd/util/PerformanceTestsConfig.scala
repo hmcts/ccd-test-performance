@@ -13,6 +13,7 @@ trait PerformanceTestsConfig {
   val UserImportId = config.getString("userImportId")
   val UserImportPassword = config.getString("userImportPassword")
   val UserAuthUrl = config.getString("idamUserTokenUrl")
+  val AuthClientId = config.getString("authClientId")
   val RedirectUriForAuthToken = config.getString("redirectUriForAuthToken")
   val S2SAuthUrl = config.getString("idamS2SUrl")
   val OAuth2ClientSecret = config.getString("oAuth2clientSecret")
