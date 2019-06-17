@@ -29,13 +29,13 @@ object ESExactMatchYesOrNo extends PerformanceTestsConfig {
 
   def httpRequest() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(url)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
 
     http("TX12_CCD_ElasticSearchEndpoint_ExactMatch_YesORNoField")
       .post(url)
       .queryParam("ctid", "AAT")
       .body(
-        ESExactMatchYesOrNoReqPayload).asJSON
+        ESExactMatchYesOrNoReqPayload).asJson
       .header("ServiceAuthorization", s2sToken)
       .header("Authorization", userToken)
       .header("Content-Type","application/json")

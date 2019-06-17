@@ -29,13 +29,13 @@ object ESSeachONFixedList extends PerformanceTestsConfig {
 
   def httpRequest() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(url)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
 
     http("TX16_CCD_ElasticSearchEndpoint_SearchONFixedListField")
       .post(url)
       .queryParam("ctid", "AAT")
       .body(
-        ESSeachONFixedListReqPayload).asJSON
+        ESSeachONFixedListReqPayload).asJson
       .header("ServiceAuthorization", s2sToken)
       .header("Authorization", userToken)
       .header("Content-Type","application/json")

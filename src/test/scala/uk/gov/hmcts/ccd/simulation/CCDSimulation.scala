@@ -1,7 +1,6 @@
 package uk.gov.hmcts.ccd.simulation
 
-import io.gatling.core.Predef._
-import io.gatling.core.Predef.Simulation
+import io.gatling.core.Predef.{Simulation, _}
 import io.gatling.core.structure.PopulationBuilder
 import io.gatling.http.Predef.{Proxy, http}
 import io.gatling.http.protocol.HttpProtocolBuilder
@@ -14,7 +13,7 @@ abstract class CCDSimulation extends Simulation with PerformanceTestsConfig {
 
   val baseHttpUrl: String
 
-  val httpConf = http.baseURL(baseHttpUrl).headers(Headers.commonHeaders)
+  val httpConf = http.baseUrl(baseHttpUrl).headers(Headers.commonHeaders)
 
   def getProxiedHttpConf(): Option[HttpProtocolBuilder] = {
     val proxyHostOptional = config.getOptionalString("httpProxyHost")

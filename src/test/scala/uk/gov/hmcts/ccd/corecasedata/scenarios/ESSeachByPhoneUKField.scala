@@ -27,13 +27,13 @@ object ESSeachByPhoneUKField extends PerformanceTestsConfig {
 
   def httpRequest() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(url)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
 
     http("TX18_CCD_ElasticSearchEndpoint_SearchByPhoneUKField")
       .post(url)
       .queryParam("ctid", "AAT")
       .body(
-        ESSeachByPhoneUKFieldReqPayload).asJSON
+        ESSeachByPhoneUKFieldReqPayload).asJson
       .header("ServiceAuthorization", s2sToken)
       .header("Authorization", userToken)
       .header("Content-Type","application/json")

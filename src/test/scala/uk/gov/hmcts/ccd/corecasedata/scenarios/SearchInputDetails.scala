@@ -13,7 +13,7 @@ object SearchInputDetails extends PerformanceTestsConfig {
 
   def httpRequest() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(url)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
     http("TX07_CCD_SearchInputDetails_searchInputDetails")
       .get(url)
       .header("ServiceAuthorization", s2sToken)

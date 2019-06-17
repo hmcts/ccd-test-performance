@@ -1,7 +1,7 @@
 package uk.gov.hmcts.ccd.data
 
 import io.gatling.core.Predef._
-import io.gatling.core.feeder.RecordSeqFeederBuilder
+import io.gatling.core.feeder.SourceFeederBuilder
 import io.gatling.http.Predef._
 import uk.gov.hmcts.ccd.util.{CcdTokenGenerator, PerformanceTestsConfig}
 
@@ -27,9 +27,9 @@ object CreateIACaseData extends PerformanceTestsConfig {
 
   println("DocStoreBashURL url - Creates a list of Stored Documents by uploading a list of binary/text files : " + DocStoreBashURL)
 
-  val fileProviderSeq: RecordSeqFeederBuilder[String] = csv("listoffiles.csv").queue
+  val fileProviderSeq: SourceFeederBuilder[String] = csv("listoffiles.csv").queue
 
-  val fileProviderRand: RecordSeqFeederBuilder[String] = csv("listoffiles.csv").random
+  val fileProviderRand: SourceFeederBuilder[String] = csv("listoffiles.csv").random
 
   val randcaseType = new Random(System.currentTimeMillis())
 
@@ -126,7 +126,7 @@ object CreateIACaseData extends PerformanceTestsConfig {
       .exec(
       http("TX02_CCD_CreateCaseEndpoint_IA_createcasedata")
         .post(CreateCaseUrl)
-        .body(EventBodyMain).asJSON
+        .body(EventBodyMain).asJson
         .header("ServiceAuthorization", token)
         .header("Authorization", userToken)
         .header("Content-Type","application/json")

@@ -13,7 +13,7 @@ object ProdDIVORCESearchD8caseReferencePagination extends PerformanceTestsConfig
 
   def httpRequest() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(url)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
     //http("search cases")
     http("TX04_CCD_DIVORCE_SearchCaseEndpoint_D8caseReference_Pagination")
       .get(url)

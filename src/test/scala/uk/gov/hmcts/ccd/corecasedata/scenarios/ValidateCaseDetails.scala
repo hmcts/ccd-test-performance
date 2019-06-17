@@ -40,7 +40,7 @@ object ValidateCaseDetails extends PerformanceTestsConfig {
 
   def validateCaseDatahttp() = {
     val token = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(CreateCaseUrl)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
     exec(
          //http("get create case event token")
            http("TX10_CCD_ValidateCaseDataEndpoint_validatecasedata_eventtoken")
@@ -54,7 +54,7 @@ object ValidateCaseDetails extends PerformanceTestsConfig {
         http("TX11_CCD_CCD_ValidateCaseDataEndpoint_validatecasedata")
         .post(url)
         .body(
-          ReqPayload).asJSON
+          ReqPayload).asJson
         .header("ServiceAuthorization", token)
         .header("Authorization", userToken)
         .header("Content-Type","application/json")

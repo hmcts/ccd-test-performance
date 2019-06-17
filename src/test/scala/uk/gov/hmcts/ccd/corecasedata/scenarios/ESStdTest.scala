@@ -80,7 +80,7 @@ object ESStdTest extends PerformanceTestsConfig {
 
 
   val token = CcdTokenGenerator.generateGatewayS2SToken()
-  val userToken = CcdTokenGenerator.generateWebUserToken(CreateCaseUrl)
+  val userToken = CcdTokenGenerator.generateWebUserToken()
 
 
  /* def createCaseDatahttp() = {
@@ -176,7 +176,7 @@ object ESStdTest extends PerformanceTestsConfig {
       //http("create case data")
       http("TX02_CCD_CreateCaseEndpoint_createcasedata")
         .post(CreateCaseUrl)
-        .body(EventBodyMain).asJSON
+        .body(EventBodyMain).asJson
         .header("ServiceAuthorization", token)
         .header("Authorization", userToken)
         .header("Content-Type","application/json")
@@ -191,7 +191,7 @@ object ESStdTest extends PerformanceTestsConfig {
           .post(url)
           .queryParam("ctid", "AAT")
           .body(
-            ESSearchONReferenceMetaDataReqPayload).asJSON
+            ESSearchONReferenceMetaDataReqPayload).asJson
          // .body(StringBody("""{"query": {"bool": {"filter": {"wildcard": {"reference": """"  + "${ESNew_Case_Id}" +   """""}}}}""")).asJSON
           .header("ServiceAuthorization", token)
           .header("Authorization", userToken)

@@ -80,7 +80,7 @@ object CreateDIVCaseDataKJ extends PerformanceTestsConfig {
 
 
   val token = CcdTokenGenerator.generateGatewayS2SToken()
-  val userToken = CcdTokenGenerator.generateWebUserToken(CreateCaseUrl)
+  val userToken = CcdTokenGenerator.generateWebUserToken()
 
 
   val   CreateDIVCaseDataSCN = scenario("Create DIV Case Data").during(TotalRunDuration minutes) {
@@ -114,7 +114,7 @@ object CreateDIVCaseDataKJ extends PerformanceTestsConfig {
       //http("create case data")
       http("TX02_CCD_CreateCaseEndpoint_Divorce_createcasedata")
         .post(CreateCaseUrl)
-        .body(EventBodyMain).asJSON
+        .body(EventBodyMain).asJson
         .header("ServiceAuthorization", token)
         .header("Authorization", userToken)
         .header("Content-Type","application/json")

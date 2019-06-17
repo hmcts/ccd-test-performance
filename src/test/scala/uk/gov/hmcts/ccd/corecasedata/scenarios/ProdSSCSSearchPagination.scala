@@ -13,7 +13,7 @@ object ProdSSCSSearchPagination extends PerformanceTestsConfig {
 
   def httpRequest() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(url)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
     //http("search cases")
     http("TX02_CCD_SSCS_SearchCaseEndpoint_Pagination_searchcases")
       .get(url)

@@ -29,13 +29,13 @@ object ESSeachByEmailField extends PerformanceTestsConfig {
 
   def httpRequest() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(url)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
 
     http("TX17_CCD_ElasticSearchEndpoint_SearchEmailField")
       .post(url)
       .queryParam("ctid", "AAT")
       .body(
-        ESSeachByEmailFieldReqPayload).asJSON
+        ESSeachByEmailFieldReqPayload).asJson
       .header("ServiceAuthorization", s2sToken)
       .header("Authorization", userToken)
       .header("Content-Type","application/json")

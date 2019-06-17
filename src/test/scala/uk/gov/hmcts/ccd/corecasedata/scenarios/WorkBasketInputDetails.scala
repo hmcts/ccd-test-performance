@@ -13,7 +13,7 @@ object WorkBasketInputDetails extends PerformanceTestsConfig {
 
   def httpRequest() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(url)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
     http("TX08_CCD_WorkBasketInputDetails_workbasketInputDetails")
       .get(url)
       .header("ServiceAuthorization", s2sToken)

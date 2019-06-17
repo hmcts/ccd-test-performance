@@ -27,13 +27,13 @@ object CrossCaseTypeAliasfuzzyYesOrNo extends PerformanceTestsConfig {
 
   def httpRequest() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(url)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
 
     http("TX21_CCD_ElasticSearchEndpoint_CrossCaseType_FuzzyQuery_YesORNoField")
       .post(url)
       .queryParam("ctid", "ATCASETYPE1,ATCASETYPE2,ATCASETYPE3,ATCASETYPE4,AAT,CASETYPE2,CASETYPE3,CASETYPE4")
       .body(
-        CrossCaseTypeAliasFuzzyYesOrNoPayload).asJSON
+        CrossCaseTypeAliasFuzzyYesOrNoPayload).asJson
       .header("ServiceAuthorization", s2sToken)
       .header("Authorization", userToken)
       .header("Content-Type","application/json")

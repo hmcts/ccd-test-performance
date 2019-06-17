@@ -24,13 +24,13 @@ object ESMatchAllCases extends PerformanceTestsConfig {
 
   def httpRequest() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(url)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
 
     http("TX11_CCD_ElasticSearchEndpoint_MatchAll_Return50Cases")
       .post(url)
       .queryParam("ctid", "AAT")
       .body(
-        ReqPayload).asJSON
+        ReqPayload).asJson
       .header("ServiceAuthorization", s2sToken)
       .header("Authorization", userToken)
       .header("Content-Type","application/json")

@@ -29,13 +29,13 @@ object ESExactMatchONDate extends PerformanceTestsConfig {
 
   def httpRequest() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(url)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
 
     http("TX15_CCD_ElasticSearchEndpoint_ExactMatchONDateField")
       .post(url)
       .queryParam("ctid", "AAT")
       .body(
-        ESExactMatchONDateReqPayload).asJSON
+        ESExactMatchONDateReqPayload).asJson
       .header("ServiceAuthorization", s2sToken)
       .header("Authorization", userToken)
       .header("Content-Type","application/json")

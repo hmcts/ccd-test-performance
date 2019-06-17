@@ -1,12 +1,12 @@
 package uk.gov.hmcts.ccd.data
 
 import io.gatling.core.Predef._
+import io.gatling.core.feeder.SourceFeederBuilder
 import io.gatling.http.Predef._
 import uk.gov.hmcts.ccd.util.{CcdTokenGenerator, PerformanceTestsConfig}
 
 import scala.concurrent.duration._
 import scala.util.Random
-import io.gatling.core.feeder.RecordSeqFeederBuilder
 
 object CreateProbateGrantMECaseData extends PerformanceTestsConfig {
 
@@ -46,9 +46,9 @@ object CreateProbateGrantMECaseData extends PerformanceTestsConfig {
 
   println("DocStoreBashURL url - Creates a list of Stored Documents by uploading a list of binary/text files : " + DocStoreBashURL)
 
-  val fileProviderSeq: RecordSeqFeederBuilder[String] = csv("listoffiles.csv").queue
+  val fileProviderSeq: SourceFeederBuilder[String] = csv("listoffiles.csv").queue
 
-  val fileProviderRand: RecordSeqFeederBuilder[String] = csv("listoffiles.csv").random
+  val fileProviderRand: SourceFeederBuilder[String] = csv("listoffiles.csv").random
 
   println("caseTypeText Value   " + EventId)
   println("caseTypeText Value   " + PickCaseType())
@@ -144,7 +144,7 @@ object CreateProbateGrantMECaseData extends PerformanceTestsConfig {
       .exec(
       http("TX02_CCD_CreateCaseEndpoint_Probate_ApplyGrantApplicationME_createcasedata")
         .post(CreateCaseUrl)
-        .body(CreateProbateGrantMECaseDataEventBodyMain).asJSON
+        .body(CreateProbateGrantMECaseDataEventBodyMain).asJson
         .header("ServiceAuthorization", token)
         .header("Authorization", userToken)
         .header("Content-Type","application/json")

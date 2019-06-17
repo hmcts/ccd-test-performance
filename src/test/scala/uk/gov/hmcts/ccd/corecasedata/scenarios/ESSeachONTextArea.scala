@@ -31,13 +31,13 @@ object ESSeachONTextArea extends PerformanceTestsConfig {
 
   def httpRequest() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
-    val userToken = CcdTokenGenerator.generateWebUserToken(url)
+    val userToken = CcdTokenGenerator.generateWebUserToken()
 
     http("TX14_CCD_ElasticSearchEndpoint_SearchONTextAreaField")
       .post(url)
       .queryParam("ctid", "AAT")
       .body(
-        ESSeachONTextAreaReqPayload).asJSON
+        ESSeachONTextAreaReqPayload).asJson
       .header("ServiceAuthorization", s2sToken)
       .header("Authorization", userToken)
       .header("Content-Type","application/json")
