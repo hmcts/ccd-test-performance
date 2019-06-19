@@ -11,7 +11,6 @@ import scala.util.Random
 
 object CreateIACaseData extends PerformanceTestsConfig {
 
-
   private val rng: Random = new Random()
   private def homeOfficeReferenceNumber(): Int = 1000000 + rng.nextInt(9999999 - 1000000) + 1
   private def appellantGivenNames(): String = rng.alphanumeric.take(10).mkString

@@ -15,16 +15,18 @@ class CCDPTSimulation extends CCDSimulation {
 
 
   val scenarios = List(
-    //CreateEthosCaseData.CreateEthosCaseDataSCN.inject(rampUsers(1) over(5 minutes))
-   //CreateIACaseData.CreateIACaseDataSCN.inject(rampUsers(1) over(5 minutes)),
-   //CreateProbateGrantCaseData.CreateProbateGrantCaseDataSCN.inject(rampUsers(1) over(5 minutes)),
+    //GetCaseDataV2.GetCaseDataV2Scenarios.inject(atOnceUsers(1))
+    //PostCaseData.createCaseData.inject(atOnceUsers(1))
+    //CreateEthosCaseData.CreateEthosCaseDataSCN.inject(atOnceUsers(1))
+   CreateIACaseData.CreateIACaseDataSCN.inject(atOnceUsers(1))
+   //CreateProbateGrantCaseData.CreateProbateGrantCaseDataSCN.inject(atOnceUsers(1))
     //CreateEthosCaseData.CreateEthosCaseDataSCN.inject(rampUsers(1) over(5 minutes)),
-   //CreateCMCCaseData.CreateCMCCaseDataSCN.inject(rampUsers(1) over(5 minutes)),
-    //CreateSSCSCaseData.CreateSSCSCaseDataSCN.inject(rampUsers(1) over(1 minutes)),
-    //CreateDIVCaseData.CreateDIVCaseDataSCN.inject(rampUsers(1) over(1 minutes)),
-    //CreateFPLCaseData.CreateFPLCaseDataSCN.inject(rampUsers(1) over(5 minutes))
+   //CreateCMCCaseData.CreateCMCCaseDataSCN.inject(atOnceUsers(1))
+    //CreateSSCSCaseData.CreateSSCSCaseDataSCN.inject(atOnceUsers(1))
+    //CreateDIVCaseData.CreateDIVCaseDataSCN.inject(atOnceUsers(1))
+    //CreateFPLCaseData.CreateFPLCaseDataSCN.inject(atOnceUsers(1))
     //CreateProbateGrantMECaseData.CreateProbateGrantMECaseDataSCN.inject(rampUsers(1) over(5 minutes)),
-   // CreateProbateCaveatCaseData.CreateProbateCaveatCaseDataSCN.inject(rampUsers(1) over(1 minutes))
+    //CreateProbateCaveatCaseData.CreateProbateCaveatCaseDataSCN.inject(atOnceUsers(1))
   )
 
 
