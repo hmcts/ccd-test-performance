@@ -20,6 +20,7 @@ object GetUserProfile extends PerformanceTestsConfig {
       .header("ServiceAuthorization", s2sToken)
       .header("Authorization", userToken)
       .header("Content-Type","application/json")
+      .header("Accept"," application/vnd.uk.gov.hmcts.ccd-data-store-api.ui-case-view.v2+json")
       .check(status in  (200))
   }
 
