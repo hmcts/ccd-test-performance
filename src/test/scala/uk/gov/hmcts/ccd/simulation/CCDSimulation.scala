@@ -1,7 +1,6 @@
 package uk.gov.hmcts.ccd.simulation
 
-import io.gatling.core.Predef._
-import io.gatling.core.Predef.Simulation
+import io.gatling.core.Predef.{Simulation, _}
 import io.gatling.core.structure.PopulationBuilder
 import io.gatling.http.Predef.{Proxy, http}
 import io.gatling.http.protocol.HttpProtocolBuilder
@@ -33,7 +32,7 @@ abstract class CCDSimulation extends Simulation with PerformanceTestsConfig {
   def setup() = setUp(scenarios())
     .protocols(getHttpConf())
    /* .throttle(
-      reachRps(ReachRPSTarget) in (ReachRPSDuration minutes),
+      reachRps(ReachRPSTarget) in (ReachRPSDuration seconds),
       holdFor(ReachRPSHoldForDuration minutes),
       jumpToRps(JumptoRPSTarget),
       holdFor(JumptoRPSDuration minutes)

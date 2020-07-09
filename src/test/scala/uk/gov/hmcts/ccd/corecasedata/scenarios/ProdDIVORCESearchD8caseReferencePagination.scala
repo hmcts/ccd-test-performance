@@ -3,32 +3,31 @@ package uk.gov.hmcts.ccd.corecasedata.scenarios
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import uk.gov.hmcts.ccd.util.{CcdTokenGenerator, PerformanceTestsConfig}
+
 import scala.concurrent.duration._
 
-object GetUserProfile extends PerformanceTestsConfig {
+object ProdDIVORCESearchD8caseReferencePagination extends PerformanceTestsConfig {
 
-  private val endpointUrl = caseDataUrl(config.getString("getUserProfileUrl"))
-  println("endpoint url: " + endpointUrl)
+  private val url: String = config.getString("caseDataUrl") + "/" + config.getString("prodDIVORCED8caseReferencePagination")
+  println("url: " + url)
 
-  def call() = {
+  def httpRequest() = {
     val s2sToken = CcdTokenGenerator.generateGatewayS2SToken()
     val userToken = CcdTokenGenerator.generateWebUserToken()
-    //println("s2sToken:  " + s2sToken + " userToken " + userToken)
-    //http("get user profile")
-    http("TX05_CCD_GetUserProfileEndpoint_getuserprofile")
-      .get(_ => endpointUrl)
+    //http("search cases")
+    http("TX04_CCD_DIVORCE_SearchCaseEndpoint_D8caseReference_Pagination")
+      .get(url)
       .header("ServiceAuthorization", s2sToken)
       .header("Authorization", userToken)
       .header("Content-Type","application/json")
-      .header("Accept"," application/vnd.uk.gov.hmcts.ccd-data-store-api.ui-case-view.v2+json")
       .check(status in  (200))
   }
 
-  println("GetUserProfile: Minimum think time " + MinThinkTime + " Maximum think time " + MaxThinkTime)
+  println("ProdDIVORCESearchD8caseReferencePagination: Minimum think time " + MinThinkTime + " Maximum think time " + MaxThinkTime)
 
-  val scenarios = scenario("Get user profile").during(TotalRunDuration minutes) {
+  val ProdDIVORCESearchD8caseReferencePaginationSCN = scenario("ProdDIVORCESearchD8caseReferencePagination search cases").during(TotalRunDuration minutes) {
       exec(
-        call()
+          httpRequest()
       )
       .pause(MinThinkTime seconds, MaxThinkTime seconds)
   }
