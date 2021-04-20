@@ -54,3 +54,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) f
 
 ##### Note
 For more information on the gradle gatling plugin please visit https://github.com/lkishalmi/gradle-gatling-plugin
+
+This repo has expired and been replaced by cdm-test-performance
